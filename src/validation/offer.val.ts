@@ -78,5 +78,13 @@ export const getOffersVal = [
   query('bookingNum').optional().isNumeric(),
   query('from').optional().isISO8601().toDate(),
   query('to').optional().isISO8601().toDate(),
+  query('limit').optional().isInt({min:1}),
+  query('page').optional().isInt({min:1}),
+  validationMiddleware
+];
+
+export const getUsersOfferVal = [
+  query('limit').optional().isInt({min:1}),
+  query('page').optional().isInt({min:1}),
   validationMiddleware
 ];

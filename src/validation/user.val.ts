@@ -115,5 +115,7 @@ export const getUsersVal = [
     .optional()
     .isISO8601()
     .withMessage('birthdateTo must be a valid ISO 8601 date'),
+  query('limit').optional().isInt({min:1}),
+  query('page').optional().isInt({min:1}),
   validationMiddleware
 ];

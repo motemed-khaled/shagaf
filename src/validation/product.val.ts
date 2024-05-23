@@ -62,5 +62,7 @@ export const getProductsVal = [
     .isNumeric()
     .withMessage('countMax must be a number')
     .toInt(),
+  query('limit').optional().isInt({min:1}),
+  query('page').optional().isInt({min:1}),
   validationMiddleware
 ];

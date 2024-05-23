@@ -54,5 +54,7 @@ export const getDaysVal = [
     .isNumeric()
     .withMessage('priceMax must be a number')
     .toFloat(),
+  query('limit').optional().isInt({min:1}),
+  query('page').optional().isInt({min:1}),
   validationMiddleware
 ];

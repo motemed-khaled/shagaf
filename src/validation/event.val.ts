@@ -77,6 +77,8 @@ export const getEventsVal = [
     .isISO8601()
     .toDate()
     .withMessage('End date must be a valid ISO8601 date'),
+  query('limit').optional().isInt({min:1}),
+  query('page').optional().isInt({min:1}),
   validationMiddleware
 ];
 

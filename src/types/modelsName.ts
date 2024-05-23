@@ -3,10 +3,11 @@ export enum MODELS{
     plan = 'plans',
     room = 'rooms',
     slider = 'sliders',
-    advertisement = 'advertisement',
-    offer = 'offer',
-    event = 'event',
-    birthDay = 'birthday',
-    category = 'category',
-    product = 'product'
+    advertisement = 'advertisements',
+    offer = 'offers',
+    event = 'events',
+    birthDay = 'birthdays',
+    category = 'categories',
+    product = 'products',
+    member = 'members'
 }

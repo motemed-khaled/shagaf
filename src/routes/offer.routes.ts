@@ -14,7 +14,7 @@ import * as val from '../validation/offer.val';
 export const router = express.Router();
 
 
-router.get('/users' , isauthenticated , globalPaginationMiddleware , handler.getLoggedUserOffersHandler);
+router.get('/users' , isauthenticated , val.getUsersOfferVal , globalPaginationMiddleware , handler.getLoggedUserOffersHandler);
 
 router.route('/')
   .post(isauthenticated , globalUploadMiddleware(FOLDERS.offer, {
