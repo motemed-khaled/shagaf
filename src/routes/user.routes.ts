@@ -12,12 +12,12 @@ export const router = express.Router();
 router.get('/' , isauthenticated , val.getUsersVal , globalPaginationMiddleware , handler.getUsersHandler);
 
 router.post('/signup' , val.signUpVal ,handler.sginUpHandler);
-router.post('/signin' , val.sigInVal , handler.siginHandler);
+router.post('/signin' , val.signInVal , handler.siginHandler);
 router.route('/verify').post(val.verifyUserVal , handler.verifyUserHandler);
 router.post('/resend-code'  , val.resendCodeVal, handler.resendVerificationCodeHandler);
 router.route('/reset-password')
   .get(val.askForgetPasswordVal , handler.askForegetPasswordHandler)
-  .patch(val.UpdateForgetPasswordVal , handler.updatePasswordHandler);
+  .patch(val.updateForgetPasswordVal , handler.updatePasswordHandler);
 
 router.use(isauthenticated);
 router.route('/change-password').patch(val.changePasswordVal , handler.changePasswordHandler);
