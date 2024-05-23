@@ -9,9 +9,9 @@ import { Files } from '../../utils/file';
 
 export const updatePlanHandler:UpdatePlanHandler = async (req,res,next)=>{
 
-  const icon = req.files as Express.Multer.File[];
+  const icon = <Express.Multer.File[]>(req.files as any).icon;
   
-  if (icon.length){
+  if (icon?.length){
     const plan = await Plan.findById(req.params.planId);
     if (!plan) 
       return next(new NotFoundError(`plan not found ${req.params.planId}`));

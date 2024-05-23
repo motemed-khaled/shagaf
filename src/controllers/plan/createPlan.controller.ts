@@ -8,9 +8,9 @@ import { FOLDERS } from '../../types/folders';
 
 export const cretaePlanHandler:CreatePlanHander = async (req,res)=>{
 
-  const icon = req.files as Express.Multer.File[];
+  const icon = <Express.Multer.File[]>(req.files as any).icon;
 
-  if (icon)
+  if (icon.length)
     req.body.icon = `/media/${FOLDERS.plan}/${icon[0].filename}`;
 
   const plan = await Plan.create(req.body);
