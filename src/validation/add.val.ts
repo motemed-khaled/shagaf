@@ -6,11 +6,11 @@ import { validationMiddleware } from '../middlewares/global-validator.middleware
 
 
 export const getAddVal = [
-  param('addId').isMongoId(),
+  param('addId').isMongoId().withMessage('Invalid addId parameter'),
   validationMiddleware
 ];
 
 export const deleteAddVal = [
-  param('addId').isMongoId(),
+  param('addId').isMongoId().withMessage('Invalid addId parameter'),
   validationMiddleware
 ];

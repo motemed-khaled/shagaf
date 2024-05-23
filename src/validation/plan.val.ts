@@ -4,30 +4,30 @@ import { validationMiddleware } from '../middlewares/global-validator.middleware
 
 
 export const createPlanVal = [
-  body('price').isInt({min:1}),
-  body('stamp').isIn(['Hour' , 'Day' , 'Month']),
+  body('price').isInt({ min: 1 }).withMessage('Price must be a positive integer'),
+  body('stamp').isIn(['Hour', 'Day', 'Month']).withMessage('Stamp must be one of: Hour, Day, Month'),
   validationMiddleware
 ];
 
 export const updatePlanVal = [
-  param('planId').isMongoId(),
-  body('price').optional().isInt({min:1}),
-  body('stamp').optional().isIn(['Hour' , 'Day' , 'Month']),
+  param('planId').isMongoId().withMessage('Invalid planId parameter'),
+  body('price').optional().isInt({ min: 1 }).withMessage('Price must be a positive integer'),
+  body('stamp').optional().isIn(['Hour', 'Day', 'Month']).withMessage('Stamp must be one of: Hour, Day, Month'),
   validationMiddleware
 ];
 
 export const deletePlanVal = [
-  param('planId').isMongoId(),
+  param('planId').isMongoId().withMessage('Invalid planId parameter'),
   validationMiddleware
 ];
 
 export const getPlanVal = [
-  param('planId').isMongoId(),
+  param('planId').isMongoId().withMessage('Invalid planId parameter'),
   validationMiddleware
 ];
 
 export const getPlansHandler = [
-  query('limit').optional().isInt({min:1}),
-  query('page').optional().isInt({min:1}),
+  query('limit').optional().isInt({ min: 1 }).withMessage('Limit must be a positive integer'),
+  query('page').optional().isInt({ min: 1 }).withMessage('Page must be a positive integer'),
   validationMiddleware
 ];
