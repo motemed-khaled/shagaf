@@ -1,0 +1,18 @@
+import 'express-async-errors';
+
+import { Plan } from '../../models/plan.model';
+import { CreatePlanHander } from '../../types/endpoints/plan.endpoint';
+import { FOLDERS } from '../../types/folders';
+
+
+
+export const cretaePlanHandler:CreatePlanHander = async (req,res)=>{
+
+  const icon = req.files as Express.Multer.File[];
+
+  if (icon)
+    req.body.icon = `/media/${FOLDERS.plan}/${icon[0].filename}`;
+
+  const plan = await Plan.create(req.body);
+  res.status(201).json({message:'success' , data:plan});
+};
