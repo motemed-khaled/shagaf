@@ -101,6 +101,8 @@ export const bookRoomVal = [
     throw new Error('end date must be Greater than start date');
   }),
   body('user').optional().isMongoId(),
+  body('stuffDiscount').optional().isBoolean().withMessage('stuffDiscount must by boolean'),
+  body('pointDiscount').optional().isInt({min:1}).withMessage('pointDiscount must by integer'),
   validationMiddleware
 ];
 

@@ -26,6 +26,8 @@ export interface IroomBooking{
     extraTimeFrom:Date;
     extraPrice:number;
     extraTimeTo:Date;
+    pointDiscount:number;
+    stuffDiscount:number;
 }
 
 

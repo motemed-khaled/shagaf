@@ -11,3 +11,4 @@ export * from './getUsers.controller';
 export * from './createUser.controller';
 export * from './updateUser.controller';
 export * from './deleteUser.controller';
+export * from './getUserDiscountPoint.controller';

@@ -64,3 +64,6 @@ extends RequestHandler<{userId:string} , successResponse<{data:Iusers}> , Partia
 
 export interface DeleteUserHandler
 extends RequestHandler<{userId:string} , successResponse , unknown , unknown>{}
+
+export interface GetUserPointsDiscountHandler 
+extends RequestHandler<{userId:string} , successResponse<{data:{discount:number}}> , unknown , unknown>{}

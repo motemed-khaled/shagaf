@@ -46,7 +46,7 @@ extends RequestHandler<{roomId:string} , successResponse<{data:Iroom}> , Partial
 
 
 export interface BookRoomHandler
-extends RequestHandler<unknown , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'startDate' | 'endDate' | 'seatCount' | 'room' | 'plan' | 'user'> , unknown>{}
+extends RequestHandler<unknown , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'startDate' | 'endDate' | 'seatCount' | 'room' | 'plan' | 'user' | 'pointDiscount' | 'stuffDiscount'> , unknown>{}
 
 export interface UpdateRoomBookHandler
 extends RequestHandler<{bookId:string} , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'startDate' | 'endDate' | 'seatCount'> , unknown>{}

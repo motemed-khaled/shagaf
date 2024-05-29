@@ -10,8 +10,10 @@ import { NotFoundError } from '../../utils/errors/notfound-error';
 
 
 export const bookRoomHandler:BookRoomHandler = async (req,res,next)=>{
+  let user;
   if (req.body.user) {
-    if (!await Users.findById(req.body.user)) 
+    user = await Users.findById(req.body.user);
+    if (!user) 
       return next(new NotFoundError(`user ${req.body.user} not found`));
   }
   const room = await Room.findById(req.body.room);  
@@ -63,7 +65,25 @@ export const bookRoomHandler:BookRoomHandler = async (req,res,next)=>{
   }
   
 
-  const totalPrice = (timeStamp.hours * hourPrice) * req.body.seatCount;
+  let totalPrice = (timeStamp.hours * hourPrice) * req.body.seatCount;
+
+  if (req.body.stuffDiscount)
+    totalPrice = totalPrice - req.body.stuffDiscount;
+
+  if (req.body.pointDiscount){
+    if (user) {
+      totalPrice = totalPrice - (user.point / 1000) * 10;
+      req.body.pointDiscount = (user!.point / 1000)*10;
+    }
+    else {
+      user = await Users.findById(req.loggedUser?.id);
+      totalPrice = totalPrice - (user!.point / 1000) * 10;
+      req.body.pointDiscount = (user!.point / 1000)*10;
+    }
+    
+  }
+    
+
   const book = await RoomBooking.create({
     ...req.body ,
     user:req.body.user?req.body.user:req.loggedUser?.id ,
