@@ -16,6 +16,7 @@ export const getUsersPagination: RequestHandler<
     isVerified?: string;
     birthdateFrom?: string;
     birthdateTo?: string;
+    userType?: 'manager' | 'stuff' | 'user'
   }
 > = async (req, res, next) => {
   try {
@@ -35,6 +36,10 @@ export const getUsersPagination: RequestHandler<
 
     if (req.query.isVerified) {
       req.pagination.filter.isVerified = req.query.isVerified === 'true';
+    }
+
+    if (req.query.userType) {
+      req.pagination.filter.userType = { $eq: req.query.userType }; 
     }
 
     if (req.query.birthdateFrom && req.query.birthdateTo) {
