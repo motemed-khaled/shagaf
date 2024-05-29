@@ -27,7 +27,9 @@ export interface Iusers{
       expireAt?: string,
       reason?: VerificationReason
     },
-    isVerified:boolean
+    isVerified:boolean,
+    userType: 'manager' | 'stuff' | 'user',
+    point:number
 }
 
 const userSchema =  new Schema<Iusers>({
@@ -41,7 +43,9 @@ const userSchema =  new Schema<Iusers>({
     type:Boolean,
     default:false
   }, 
-  birthdate:Date
+  birthdate:Date,
+  userType:{type:String , enum:['manager' , 'stuff' , 'user' ] , default:'user'},
+  point:{type:Number , default:0}
 },{timestamps:true , collection:MODELS.user});
 
 

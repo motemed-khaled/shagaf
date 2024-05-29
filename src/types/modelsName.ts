@@ -9,5 +9,8 @@ export enum MODELS{
     birthDay = 'birthdays',
     category = 'categories',
     product = 'products',
-    member = 'members'
+    member = 'members',
+    roomBooking = 'roomBooking',
+    dayBook = 'dayBook',
+    eventBook = 'eventBook'
 }

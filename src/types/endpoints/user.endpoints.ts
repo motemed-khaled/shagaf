@@ -55,3 +55,12 @@ extends RequestHandler<unknown , successResponse , {email:string} , unknown>{}
 
 export interface GetAllUsersHandler
 extends RequestHandler<unknown , PaginationResponse<{data:Iusers[]}> , unknown , unknown>{}
+
+export interface CreateUserHandler
+extends RequestHandler<unknown , successResponse<{data:Iusers}> , Pick<Iusers , 'birthdate' | 'phone' | 'username' | 'password' | 'email' | 'userType'> , unknown >{}
+
+export interface UpdateUserHandler
+extends RequestHandler<{userId:string} , successResponse<{data:Iusers}> , Partial<Pick<Iusers , 'birthdate' | 'phone' | 'username' | 'password' | 'email' | 'userType'>> , unknown >{}
+
+export interface DeleteUserHandler
+extends RequestHandler<{userId:string} , successResponse , unknown , unknown>{}

@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 
+import { IroomBooking } from '../../models/roomBooking.model';
 import { Iroom } from '../../models/rooms.model';
 import { PaginationResponse, successResponse } from '../response';
 
@@ -42,3 +43,32 @@ extends RequestHandler<{roomId:string} , successResponse , {attachId:string} , u
 
 export interface AddAttachmentHandler
 extends RequestHandler<{roomId:string} , successResponse<{data:Iroom}> , Partial<Pick<Iroom , 'attachments'>> , unknown>{}
+
+
+export interface BookRoomHandler
+extends RequestHandler<unknown , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'startDate' | 'endDate' | 'seatCount' | 'room' | 'plan' | 'user'> , unknown>{}
+
+export interface UpdateRoomBookHandler
+extends RequestHandler<{bookId:string} , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'startDate' | 'endDate' | 'seatCount'> , unknown>{}
+
+export interface GetUserBookingHandler
+extends RequestHandler<unknown , successResponse<{data:IroomBooking[]}> , unknown , unknown>{}
+
+export interface GetBookHandler
+extends RequestHandler<{bookId:string} , successResponse<{data:IroomBooking}> , unknown , unknown>{}
+
+export interface GetAllBookingHandler
+extends RequestHandler<unknown , PaginationResponse<{data:IroomBooking[]}> , unknown , unknown>{}
+
+export interface AddCoffeeToBookingHandler
+extends RequestHandler<{bookId:string} , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'coffee'> , unknown>{}
+
+export interface UpdateCoffeeToBookingHandler
+extends RequestHandler<{bookId:string} , successResponse<{data:IroomBooking}> , {coffeeId:string , count:number} , unknown>{}
+
+export interface AddExtraTimeHandler
+extends RequestHandler<{bookId:string}, successResponse<{data:IroomBooking}> , {extraTimeTo:Date , extraTimeFrom:Date} , unknown>{}
+
+
+export interface UpdatePaymentHandler
+extends RequestHandler<{bookId:string} , successResponse , Partial<Pick<IroomBooking , 'coffeePaid' | 'reservationPaid' | 'extraPaid'>> , unknown>{}

@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 
 import { Ievent } from '../../models/event.model';
+import { IeventBook } from '../../models/eventBook.model';
 import { PaginationResponse, successResponse } from '../response';
 
 
@@ -25,3 +26,13 @@ extends RequestHandler<{eventId:string} , successResponse<{data:Ievent}> , {titl
 
 export interface DeleteDetailHandler
 extends RequestHandler<{eventId:string} , successResponse , {titleId:string} , unknown>{}
+
+export interface BookEventHandler
+extends RequestHandler<unknown , successResponse<{data:IeventBook}> , Pick<IeventBook , 'event'> , unknown>{}
+
+export interface GetUserEventBookHandler
+extends RequestHandler<unknown , successResponse<{data:IeventBook[]}> , unknown , unknown>{}
+export interface GetEventsBookHandler
+extends RequestHandler<unknown , PaginationResponse<{data:IeventBook[]}> , unknown , unknown>{}
+export interface GetEventBookHandler
+extends RequestHandler<{bookId:string} , successResponse<{data:IeventBook}> , unknown , unknown>{}

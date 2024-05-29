@@ -21,7 +21,22 @@ router.route('/')
   .get(val.getRoomsVal , globalPaginationMiddleware , handler.getRoomsPagination , handler.getRoomsHandler);
 
 
+router.get('/book/user' , isauthenticated , handler.getUserBookingHandler);
 
+router.route('/book')
+  .post( isauthenticated , val.bookRoomVal , handler.bookRoomHandler)
+  .get(isauthenticated , val.getAllBookingVal , globalPaginationMiddleware , handler.getAllBookingHandler);
+
+router.route('/book/:bookId')
+  .patch(isauthenticated , val.updateBookVal , handler.updateRoomBookHandler)
+  .get(isauthenticated , val.getBookVal , handler.getBookHandler);
+
+router.route('/book/:bookId/stuff')
+  .post(isauthenticated , val.addExtraTimeVal , handler.addExtraTimeHandler)
+  .put(isauthenticated , val.addCoffeeVal , handler.addCoffeeHandler)
+  .patch(isauthenticated , val.updateCoffeeVal , handler.updateCoffeeToBokkingHandler);
+
+router.route('/book/:bookId/payment').patch(isauthenticated , val.updatePaymentVal, handler.updatePaymentHandler);
 
 router.route('/:roomId')
   .patch(

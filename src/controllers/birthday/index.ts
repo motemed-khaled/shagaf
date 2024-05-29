@@ -3,3 +3,8 @@ export * from './deleteDay.controller';
 export * from './getDay.controller';
 export * from './getDays.controller';
 export * from './updateDay.controller';
+export * from './dayBook.controller';
+export * from './updateBook.controller';
+export * from './getAllBooking.controller';
+export * from './getBook.controller';
+export * from './getUserBookingHandler';

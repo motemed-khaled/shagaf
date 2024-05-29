@@ -83,3 +83,111 @@ export const getRoomsVal = [
   query('page').optional().isInt({ min: 1 }).withMessage('Page must be a positive integer'),
   validationMiddleware
 ];
+
+export const bookRoomVal = [
+  body('room').isMongoId(),
+  body('plan').isMongoId(),
+  body('seatCount').optional().isInt({min:1}),
+  body('startDate').isISO8601().custom((val)=>{
+    const date = new Date(val);
+    const now = new Date();
+    if (date > now) return true;
+    throw new Error('start date must be in the future');
+  }),
+  body('endDate').isISO8601().custom((val , {req})=>{
+    const date = new Date(val);
+    const now = new Date(req.body.startDate);
+    if (date > now) return true;
+    throw new Error('end date must be Greater than start date');
+  }),
+  body('user').optional().isMongoId(),
+  validationMiddleware
+];
+
+export const getAllBookingVal = [
+  query('user').optional().isMongoId().withMessage('Invalid user ID format'),
+  query('room').optional().isMongoId().withMessage('Invalid room ID format'),
+  query('startDate').optional().isISO8601().toDate().withMessage('Invalid start date format'),
+  query('endDate').optional().isISO8601().toDate().withMessage('Invalid end date format'),
+  query('paid').optional().isBoolean().withMessage('Paid must be a boolean value'),
+  validationMiddleware
+];
+
+export const updateBookVal = [
+  param('bookId').isMongoId(),
+  body('startDate').isISO8601().custom((val)=>{
+    const date = new Date(val);
+    const now = new Date();
+    if (date > now) return true;
+    throw new Error('start date must be in the future');
+  }),
+  body('endDate').isISO8601().custom((val , {req})=>{
+    const date = new Date(val);
+    const now = new Date(req.body.startDate);
+    if (date > now) return true;
+    throw new Error('end date must be Greater than start date');
+  }),
+  body('seatCount').optional().isInt({min:1}),
+  validationMiddleware
+];
+
+export const getBookVal = [
+  param('bookId').isMongoId(),
+  validationMiddleware
+];
+
+export const addCoffeeVal = [
+  param('bookId').isMongoId(),
+  body('coffee').isArray({min:1}),
+  body('coffee.*').isObject(),
+  body('coffee.*.product').isMongoId(),
+  body('coffee.*.count').isInt({min:1}),
+  validationMiddleware
+];
+
+export const updateCoffeeVal = [
+  param('bookId').isMongoId(),
+  body('coffeeId').isMongoId(),
+  body('count').isInt(),
+  validationMiddleware
+];
+
+export const addExtraTimeVal = [
+  param('bookId').isMongoId(),
+  body('extraTimeFrom').isISO8601().custom((val)=>{
+    const date = new Date(val);
+    const now = new Date();
+    if (date > now) return true;
+    throw new Error('start date must be in the future');
+  }),
+  body('extraTimeTo').isISO8601().custom((val , {req})=>{
+    const date = new Date(val);
+    const now = new Date(req.body.extraTimeFrom);
+    if (date > now) return true;
+    throw new Error('end date must be Greater than start date');
+  }),
+  validationMiddleware
+];
+
+export const updatePaymentVal = [
+  param('bookId').isMongoId(),
+  body('extraPaid')
+    .optional()
+    .isBoolean()
+    .withMessage('extraPaid must be a boolean')
+    .custom(value => value === true)
+    .withMessage('extraPaid must be true'),
+  body('reservationPaid') 
+    .optional()
+    .isBoolean()
+    .withMessage('reservationPaid must be a boolean')
+    .custom(value => value === true)
+    .withMessage('reservationPaid must be true'),
+  body('coffeePaid')
+    .optional()
+    .isBoolean()
+    .withMessage('coffeePaid must be a boolean')
+    .custom(value => value === true)
+    .withMessage('coffeePaid must be true'),
+  validationMiddleware
+];

@@ -75,3 +75,22 @@ export const updateDetailVal = [
   validationMiddleware
 ];
 
+export const eventBookVal = [
+  body('event').isMongoId(),
+  validationMiddleware
+];
+
+export const getEventBookVal = [
+  param('bookId').isMongoId(),
+  validationMiddleware
+];
+
+
+export const getEventsBookVal =[
+  query('user').optional().isMongoId().withMessage('Invalid user ID'),
+  query('event').optional().isMongoId().withMessage('Invalid event ID'),
+  query('date').optional().isISO8601().toDate().withMessage('Invalid date'),
+  query('totalPriceMin').optional().isFloat({ min: 0 }).withMessage('Total price minimum must be a positive number'),
+  query('totalPriceMax').optional().isFloat({ min: 0 }).withMessage('Total price maximum must be a positive number'),
+  validationMiddleware
+];

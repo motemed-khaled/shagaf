@@ -29,3 +29,7 @@ router.route('/update-email')
 router.route('/profile')
   .patch(val.updateLoggedUserVal , handler.updateLoggedUserHandler)
   .get(handler.getLoggedUserHandler);
+
+router.route('/admin').post(isauthenticated , val.createUserVal , handler.createUserHandler);
+router.route('/admin/:userId').patch(isauthenticated , val.updateUserVal , handler.updateUserHandler)
+  .delete(isauthenticated , val.deleteUserVal , handler.deleteUserHandler);

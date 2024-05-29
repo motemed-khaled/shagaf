@@ -21,6 +21,12 @@ router.route('/')
   }).fields([{name:'cover' , maxCount:1}]) , val.createEventVal , checkRequiredFields({ fields: ['cover'] }) , handler.createEventHandler )
   .get(globalPaginationMiddleware,handler.getEventsHandler);
 
+router.route('/book' )
+  .post(isauthenticated ,val.eventBookVal , handler.bookEventHandler )
+  .get(isauthenticated  , val.getEventsBookVal , globalPaginationMiddleware  , handler.getEventsBookingHandler);
+
+router.route('/book/user').get(isauthenticated , handler.getUserBookEventsHandler);
+router.route('/book/:bookId').get(isauthenticated ,val.getEventBookVal , handler.getEventBookHandler);
 
 router.route('/:eventId/detail')
   .patch(isauthenticated , val.updateDetailVal , handler.updateDetailHandler)

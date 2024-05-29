@@ -5,3 +5,7 @@ export * from './getEvent.controller';
 export * from './getEvents.controller';
 export * from './updateDetail.controller';
 export * from './updateEvent.controller';
+export * from './bookEvent.controller';
+export * from './getEventsBooking.controller';
+export * from './getEventBooking.controller';
+export * from './getUserBookEvents.controller';

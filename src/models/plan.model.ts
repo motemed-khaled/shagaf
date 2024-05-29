@@ -24,6 +24,5 @@ export const Plan = model<Iplan>(MODELS.plan , new Schema<Iplan>({
   stamp:{
     type:String,
     enum:['Hour' , 'Day' , 'Month'],
-    default:'Day'
   }
 },{timestamps:true , collection:MODELS.plan}));

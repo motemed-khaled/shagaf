@@ -20,6 +20,18 @@ router.route('/')
   }).fields([{name:'cover' , maxCount:1}]) , val.createDayVal , checkRequiredFields({ fields: ['cover'] }) , handler.createDayHandler)
   .get(val.getDaysVal , globalPaginationMiddleware , handler.getDaysHandler);
 
+
+router.route('/book')
+  .post( isauthenticated, val.dayBookVal , handler.dayBookHandler)
+  .get(isauthenticated , val.getAllBookingVal , globalPaginationMiddleware , handler.getAllBookingHandler);
+
+
+router.get('/book/user' , isauthenticated , handler.getUserBookingHandler);
+
+router.route('/book/:bookId')
+  .patch(isauthenticated , val.UpdateDayBookVal , handler.updateBookHandler)
+  .get(isauthenticated , val.getBookVal , handler.getBookHandler);
+
 router.route('/:dayId')
   .patch(isauthenticated ,globalUploadMiddleware(FOLDERS.birthday, {
     maxSize: 50 * 1024 * 1024,

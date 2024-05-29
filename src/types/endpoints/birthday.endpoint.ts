@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 
 import { Ibirthday } from '../../models/birthDay.model';
+import { IdayBook } from '../../models/dayBook.model';
 import { PaginationResponse, successResponse } from '../response';
 
 
@@ -20,3 +21,17 @@ extends RequestHandler<unknown , PaginationResponse<{data:Ibirthday[]}> , unknow
 
 export interface DeleteDayHandler
 extends RequestHandler<{dayId:string} , successResponse , unknown , unknown>{}
+
+export interface DayBookHandler
+extends RequestHandler<unknown , successResponse<{data:IdayBook}> , Pick<IdayBook , 'startDate' | 'endDate' | 'products' | 'totalPrice'> , unknown>{}
+export interface UpdateDayBookHandler
+extends RequestHandler<{bookId:string} , successResponse<{data:IdayBook}> , Pick<IdayBook , 'startDate' | 'endDate' > , unknown>{}
+
+export interface GetUserBookingHandler
+extends RequestHandler<unknown , successResponse<{data:IdayBook[]}> , unknown , unknown>{}
+
+export interface GetAllBookingHandler
+extends RequestHandler<unknown , PaginationResponse<{data:IdayBook[]}> , unknown , unknown>{}
+
+export interface GetDayBookHandler
+extends RequestHandler<{bookId:string} , successResponse<{data:IdayBook}> , unknown , unknown>{}
