@@ -7,16 +7,12 @@ import { Room } from '../../models/rooms.model';
 import { UpdateRoomBookHandler } from '../../types/endpoints/room.endpoint';
 import { BadRequestError } from '../../utils/errors/bad-request-error';
 import { NotFoundError } from '../../utils/errors/notfound-error';
-import { UnauthorizedError } from '../../utils/errors/un-authorizedError';
 
 
 export const updateRoomBookHandler:UpdateRoomBookHandler = async (req,res,next)=>{
   const book = await RoomBooking.findOne({_id:req.params.bookId ,reservationPaid:false});
   if (!book) 
     return next(new BadRequestError('cant update this book'));
-
-  if (book.user.toString() != req.loggedUser?.id) 
-    return next(new UnauthorizedError('user not owner for this booking'));
 
   const room = await Room.findById(book.room);
   if (!room) 
@@ -72,5 +68,6 @@ export const updateRoomBookHandler:UpdateRoomBookHandler = async (req,res,next)=
     {path:'plan'}
   ]);
   await room.save();
+  await updatedBook?.save();
   res.status(200).json({message:'success' , data:updatedBook!});
 };

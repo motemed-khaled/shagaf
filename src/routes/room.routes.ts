@@ -36,8 +36,9 @@ router.route('/book/:bookId/stuff')
   .put(isauthenticated , val.addCoffeeVal , handler.addCoffeeHandler)
   .patch(isauthenticated , val.updateCoffeeVal , handler.updateCoffeeToBokkingHandler);
 
+  
 router.route('/book/:bookId/payment').patch(isauthenticated , val.updatePaymentVal, handler.updatePaymentHandler);
-
+  
 router.route('/:roomId')
   .patch(
     isauthenticated,

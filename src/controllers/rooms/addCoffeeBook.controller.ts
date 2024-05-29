@@ -32,7 +32,7 @@ export const addCoffeeHandler:AddCoffeeToBookingHandler = async (req,res,next)=>
     {path:'coffee.product'}
   ]);
 
-
+  await updatedBook?.save();
   res.status(200).json({message:'success' , data:updatedBook!});
 
 };

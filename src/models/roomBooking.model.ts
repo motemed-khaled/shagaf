@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { model, Schema, Types } from 'mongoose';
 
 import { Iplan } from './plan.model';
 import { Iproduct } from './product.model';
+import { AuditLog } from './roomBookingLog.schema';
 import { Iroom } from './rooms.model';
 import { Iusers } from './user.model';
 import { MODELS } from '../types/modelsName';
@@ -31,7 +33,7 @@ export interface IroomBooking{
 }
 
 
-export const RoomBooking = model<IroomBooking>(MODELS.roomBooking , new Schema<IroomBooking>({
+export const RoomBookingSchema =  new Schema<IroomBooking>({
   user:{type:Schema.Types.ObjectId , ref:MODELS.user},
   room:{type:Schema.Types.ObjectId , ref:MODELS.room},
   coffee:[{product:{type:Schema.Types.ObjectId , ref:MODELS.product} , count:{type:Number , default:1}}],
@@ -50,4 +52,56 @@ export const RoomBooking = model<IroomBooking>(MODELS.roomBooking , new Schema<I
   startDate:Date,
   endDate:Date,
   cancellationDate:Date
-} , {timestamps:true , collection:MODELS.roomBooking}));
+} , {timestamps:true , collection:MODELS.roomBooking});
+
+type Details = {
+  [key: string]: any;
+};
+
+
+RoomBookingSchema.pre('save', async function (next) {
+  if (this.isNew) {
+    await AuditLog.create({
+      user: this.user,
+      action: 'create',
+      targetModel: MODELS.roomBooking,
+      targetId: this._id,
+      details: this.toObject()
+    });
+  } else {
+    const modifiedFields = this.modifiedPaths();
+    const details: Details = {}; // Using the Details type
+
+    modifiedFields.forEach(field => {
+      details[field] = this.get(field);
+    });
+
+    await AuditLog.create({
+      user: this.user,
+      action: 'update',
+      targetModel: MODELS.roomBooking,
+      targetId: this._id,
+      details
+    });
+  }
+  next();
+});
+
+async function logDelete(this: any, next: Function) {
+  const docToDelete = await this.model.findOne(this.getQuery());
+  if (docToDelete) {
+    await AuditLog.create({
+      user: docToDelete.user,
+      action: 'delete',
+      targetModel: MODELS.roomBooking,
+      targetId: docToDelete._id
+    });
+  }
+  next();
+}
+
+RoomBookingSchema.pre('findOneAndDelete', logDelete);
+
+
+
+export const RoomBooking = model<IroomBooking>(MODELS.roomBooking , RoomBookingSchema);
