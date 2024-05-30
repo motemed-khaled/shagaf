@@ -9,6 +9,8 @@ export const createMemberVal = [
   body('details').isArray({ min: 1 }).withMessage('Details must be a non-empty array'),
   body('details.*').isObject().withMessage('Each detail must be an object'),
   body('details.*.title').exists().isString().withMessage('Detail title is required and must be a string'),
+  body('duration').isInt({min:1}).withMessage('duration is required and must be a integer'),
+  body('durationType').isIn(['Day' , 'Month' , 'Year']).withMessage('durationType must be one of this Day Month Year'),
   validationMiddleware
 ];
 
@@ -16,6 +18,8 @@ export const updateMemberVal = [
   param('memberId').isMongoId().withMessage('Invalid memberId parameter'),
   body('price').optional().isFloat({ min: 1 }).withMessage('Price must be a positive number'),
   body('title').optional().exists().isString().withMessage('Title must be a string'),
+  body('duration').optional().isInt({min:1}).withMessage('duration is required and must be a integer'),
+  body('durationType').optional().isIn(['Day' , 'Month' , 'Year']).withMessage('durationType must be one of this Day Month Year'),
   validationMiddleware
 ];
 
