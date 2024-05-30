@@ -2,7 +2,7 @@ import 'express-async-errors';
 
 import { RequestHandler } from 'express';
 
-import { AuditLog } from '../../models/roomBookingLog.schema';
+import { AuditLog } from '../../models/bookingLog.schema';
 import { GetLogierForBookingHandler } from '../../types/endpoints/roomBookingLog.endpoint';
 
 

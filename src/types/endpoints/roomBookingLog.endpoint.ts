@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { IAuditLog } from '../../models/roomBookingLog.schema';
+import { IAuditLog } from '../../models/bookingLog.schema';
 import { PaginationResponse } from '../response';
 
 

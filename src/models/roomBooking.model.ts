@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { model, Schema, Types } from 'mongoose';
 
+import { AuditLog } from './bookingLog.schema';
 import { Iplan } from './plan.model';
 import { Iproduct } from './product.model';
-import { AuditLog } from './roomBookingLog.schema';
 import { Iroom } from './rooms.model';
 import { Iusers } from './user.model';
 import { MODELS } from '../types/modelsName';

@@ -28,7 +28,7 @@ export interface DeleteDetailHandler
 extends RequestHandler<{eventId:string} , successResponse , {titleId:string} , unknown>{}
 
 export interface BookEventHandler
-extends RequestHandler<unknown , successResponse<{data:IeventBook}> , Pick<IeventBook , 'event'> , unknown>{}
+extends RequestHandler<unknown , successResponse<{data:IeventBook}> , Pick<IeventBook , 'event' | 'user' | 'pointDiscount' | 'stuffDiscount'> , unknown>{}
 
 export interface GetUserEventBookHandler
 extends RequestHandler<unknown , successResponse<{data:IeventBook[]}> , unknown , unknown>{}
@@ -36,3 +36,6 @@ export interface GetEventsBookHandler
 extends RequestHandler<unknown , PaginationResponse<{data:IeventBook[]}> , unknown , unknown>{}
 export interface GetEventBookHandler
 extends RequestHandler<{bookId:string} , successResponse<{data:IeventBook}> , unknown , unknown>{}
+
+export interface UpdateEventBookPaymentHandler
+extends RequestHandler<{bookId:string} , successResponse , unknown , unknown>{}

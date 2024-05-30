@@ -8,3 +8,4 @@ export * from './updateBook.controller';
 export * from './getAllBooking.controller';
 export * from './getBook.controller';
 export * from './getUserBookingHandler';
+export * from './updateBookPayment.controller';

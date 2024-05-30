@@ -77,6 +77,9 @@ export const updateDetailVal = [
 
 export const eventBookVal = [
   body('event').isMongoId(),
+  body('user').optional().isMongoId(),
+  body('stuffDiscount').optional().isBoolean().withMessage('stuffDiscount must by boolean'),
+  body('pointDiscount').optional().isInt({min:1}).withMessage('pointDiscount must by integer'),
   validationMiddleware
 ];
 

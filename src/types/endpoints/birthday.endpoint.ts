@@ -23,7 +23,7 @@ export interface DeleteDayHandler
 extends RequestHandler<{dayId:string} , successResponse , unknown , unknown>{}
 
 export interface DayBookHandler
-extends RequestHandler<unknown , successResponse<{data:IdayBook}> , Pick<IdayBook , 'startDate' | 'endDate' | 'products' | 'totalPrice'> , unknown>{}
+extends RequestHandler<unknown , successResponse<{data:IdayBook}> , Pick<IdayBook , 'startDate' | 'endDate' | 'products' | 'totalPrice' | 'user' | 'stuffDiscount' | 'pointDiscount'> , unknown>{}
 export interface UpdateDayBookHandler
 extends RequestHandler<{bookId:string} , successResponse<{data:IdayBook}> , Pick<IdayBook , 'startDate' | 'endDate' > , unknown>{}
 
@@ -35,3 +35,6 @@ extends RequestHandler<unknown , PaginationResponse<{data:IdayBook[]}> , unknown
 
 export interface GetDayBookHandler
 extends RequestHandler<{bookId:string} , successResponse<{data:IdayBook}> , unknown , unknown>{}
+
+export interface UpdateDayBookPaymentHandler
+extends RequestHandler<{bookId:string} , successResponse , unknown , unknown>{}

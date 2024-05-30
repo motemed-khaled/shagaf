@@ -30,7 +30,8 @@ router.get('/book/user' , isauthenticated , handler.getUserBookingHandler);
 
 router.route('/book/:bookId')
   .patch(isauthenticated , val.UpdateDayBookVal , handler.updateBookHandler)
-  .get(isauthenticated , val.getBookVal , handler.getBookHandler);
+  .get(isauthenticated , val.getBookVal , handler.getBookHandler)
+  .put(isauthenticated , val.getBookVal , handler.updateBookPaymentHandler);
 
 router.route('/:dayId')
   .patch(isauthenticated ,globalUploadMiddleware(FOLDERS.birthday, {

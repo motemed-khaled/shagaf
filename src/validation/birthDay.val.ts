@@ -40,7 +40,7 @@ export const getDaysVal = [
 ];
 
 export const dayBookVal = [
-  body('bookId').isMongoId(),
+  body('user').isMongoId(),
   body('startDate').isISO8601().custom((val)=>{
     const date = new Date(val);
     const now = new Date();
@@ -57,6 +57,8 @@ export const dayBookVal = [
   body('products.*').isObject(),
   body('products.*.count').isInt({min:1}),
   body('products.*.product').isMongoId(),
+  body('stuffDiscount').optional().isBoolean().withMessage('stuffDiscount must by boolean'),
+  body('pointDiscount').optional().isInt({min:1}).withMessage('pointDiscount must by integer'),
   body('totalPrice').not().exists(),
   body('paid').not().exists(),
   validationMiddleware

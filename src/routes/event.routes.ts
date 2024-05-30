@@ -26,7 +26,9 @@ router.route('/book' )
   .get(isauthenticated  , val.getEventsBookVal , globalPaginationMiddleware  , handler.getEventsBookingHandler);
 
 router.route('/book/user').get(isauthenticated , handler.getUserBookEventsHandler);
-router.route('/book/:bookId').get(isauthenticated ,val.getEventBookVal , handler.getEventBookHandler);
+router.route('/book/:bookId')
+  .get(isauthenticated ,val.getEventBookVal , handler.getEventBookHandler)
+  .patch(isauthenticated , val.getEventBookVal , handler.updateEventBookPaymentHandler);
 
 router.route('/:eventId/detail')
   .patch(isauthenticated , val.updateDetailVal , handler.updateDetailHandler)
