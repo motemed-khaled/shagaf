@@ -51,3 +51,34 @@ export const getMembersVal = [
   query('page').optional().isInt({ min: 1 }).withMessage('Page must be a positive integer'),
   validationMiddleware
 ];
+
+
+export const memberBookVal = [
+  body('member').isMongoId(),
+  body('user').optional().isMongoId(),
+  body('start').isISO8601().toDate(),
+  body('stuffDiscount').optional().isBoolean().withMessage('stuffDiscount must by boolean'),
+  body('pointDiscount').optional().isInt({min:1}).withMessage('pointDiscount must by integer'),
+  validationMiddleware
+];
+
+export const updateBookVal = [
+  param('bookId').isMongoId(),
+  body('start').optional().isISO8601().toDate(),
+  validationMiddleware
+];
+
+export const getBookVal = [
+  param('bookId').isMongoId(),
+  validationMiddleware
+];
+
+export const getAllBookingVal = [
+  query('user').optional().isMongoId().withMessage('Invalid user ID format'),
+  query('startDate').optional().isISO8601().toDate().withMessage('Invalid start date format'),
+  query('endDate').optional().isISO8601().toDate().withMessage('Invalid end date format'),
+  query('paid').optional().isBoolean().withMessage('Paid must be a boolean value'),
+  query('limit').optional().isInt({min:1}).withMessage('limit must be integer'),
+  query('page').optional().isInt({min:1}).withMessage('page must be integer'),
+  validationMiddleware
+];
