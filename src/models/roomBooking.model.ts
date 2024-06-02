@@ -2,6 +2,7 @@
 import { model, Schema, Types } from 'mongoose';
 
 import { AuditLog } from './bookingLog.schema';
+import { Ioffer } from './offers.model';
 import { Iplan } from './plan.model';
 import { Iproduct } from './product.model';
 import { Iroom } from './rooms.model';
@@ -13,8 +14,8 @@ export interface IroomBooking{
     user:Types.ObjectId | Iusers;
     room:Types.ObjectId | Iroom;
     plan:Types.ObjectId | Iplan;
+    voucher:Types.ObjectId | Ioffer;
     reservationPrice:number;
-    voucher:number;
     startDate:Date;
     endDate:Date;
     seatCount:number;
@@ -38,7 +39,7 @@ export const RoomBookingSchema =  new Schema<IroomBooking>({
   room:{type:Schema.Types.ObjectId , ref:MODELS.room},
   coffee:[{product:{type:Schema.Types.ObjectId , ref:MODELS.product} , count:{type:Number , default:1}}],
   plan:{type:Schema.Types.ObjectId , ref:MODELS.plan},
-  voucher:{type:Number , default:0},
+  voucher:{type:Schema.Types.ObjectId , ref:MODELS.offer},
   seatCount:{type:Number , default:1},
   totalPrice:{type:Number , default:0},
   reservationPaid:{type:Boolean , default:false},

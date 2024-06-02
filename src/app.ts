@@ -17,6 +17,7 @@ app.set('trust proxy', true);
 app.use(express.json());
 app.use('/media', express.static('media'));
 
+
 mountRoutes(app);
 
 app.use(globalErrorHandlingMiddleware);

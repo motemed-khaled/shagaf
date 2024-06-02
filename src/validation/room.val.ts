@@ -130,6 +130,7 @@ export const updateBookVal = [
     throw new Error('end date must be Greater than start date');
   }),
   body('seatCount').optional().isInt({min:1}),
+  body('voucher').optional().isMongoId(),
   validationMiddleware
 ];
 

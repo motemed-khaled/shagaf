@@ -78,6 +78,7 @@ export const UpdateDayBookVal = [
     if (date > start) return true;
     throw new Error('end date must be Greater than start date');
   }),
+  body('voucher').optional().isMongoId(),
   body('totalPrice').not().exists(),
   body('paid').not().exists(),
   body('products').not().exists(),

@@ -10,3 +10,4 @@ export * from './getEventsBooking.controller';
 export * from './getEventBooking.controller';
 export * from './getUserBookEvents.controller';
 export * from './updateEventBookPayment.controller';
+export * from './updateEventBook.controller';

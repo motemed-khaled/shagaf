@@ -4,12 +4,14 @@ import { model, Schema, Types, Document } from 'mongoose';
 
 import { AuditLog } from './bookingLog.schema';
 import { Ievent } from './event.model';
+import { Ioffer } from './offers.model';
 import { Iusers } from './user.model';
 import { MODELS } from '../types/modelsName';
 
 export interface IeventBook extends Document {
   user: Types.ObjectId | Iusers;
   event: Types.ObjectId | Ievent;
+  voucher: Types.ObjectId | Ioffer;
   totalPrice: number;
   date: Date;
   paid: boolean;

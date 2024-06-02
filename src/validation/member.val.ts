@@ -65,6 +65,7 @@ export const memberBookVal = [
 export const updateBookVal = [
   param('bookId').isMongoId(),
   body('start').optional().isISO8601().toDate(),
+  body('voucher').optional().isMongoId(),
   validationMiddleware
 ];
 

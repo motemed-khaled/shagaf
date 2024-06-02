@@ -49,7 +49,7 @@ export interface BookRoomHandler
 extends RequestHandler<unknown , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'startDate' | 'endDate' | 'seatCount' | 'room' | 'plan' | 'user' | 'pointDiscount' | 'stuffDiscount'> , unknown>{}
 
 export interface UpdateRoomBookHandler
-extends RequestHandler<{bookId:string} , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'startDate' | 'endDate' | 'seatCount'> , unknown>{}
+extends RequestHandler<{bookId:string} , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'startDate' | 'endDate' | 'seatCount' | 'voucher'> , unknown>{}
 
 export interface GetUserBookingHandler
 extends RequestHandler<unknown , successResponse<{data:IroomBooking[]}> , unknown , unknown>{}

@@ -3,6 +3,7 @@ import { model, Schema, Types } from 'mongoose';
 
 import { AuditLog } from './bookingLog.schema';
 import { Imember } from './members.model';
+import { Ioffer } from './offers.model';
 import { Iusers } from './user.model';
 import { MODELS } from '../types/modelsName';
 
@@ -10,6 +11,7 @@ import { MODELS } from '../types/modelsName';
 export interface ImemberBooking {
     member: Types.ObjectId | Imember;
     user: Types.ObjectId | Iusers;
+    voucher:Types.ObjectId | Ioffer;
     start: Date;
     paid: boolean;
     totalPrice:number;

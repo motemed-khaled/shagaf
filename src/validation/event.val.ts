@@ -97,3 +97,9 @@ export const getEventsBookVal =[
   query('totalPriceMax').optional().isFloat({ min: 0 }).withMessage('Total price maximum must be a positive number'),
   validationMiddleware
 ];
+
+export const updateBookVal = [
+  param('bookId').isMongoId(),
+  body('voucher').isMongoId(),
+  validationMiddleware
+];

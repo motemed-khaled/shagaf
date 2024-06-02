@@ -23,7 +23,8 @@ router.route('/')
 
 router.route('/book' )
   .post(isauthenticated ,val.eventBookVal , handler.bookEventHandler )
-  .get(isauthenticated  , val.getEventsBookVal , globalPaginationMiddleware  , handler.getEventsBookingHandler);
+  .get(isauthenticated  , val.getEventsBookVal , globalPaginationMiddleware  , handler.getEventsBookingHandler)
+  .patch(isauthenticated , val.updateBookVal , handler.updateEventBookHandler);
 
 router.route('/book/user').get(isauthenticated , handler.getUserBookEventsHandler);
 router.route('/book/:bookId')

@@ -37,5 +37,8 @@ extends RequestHandler<unknown , PaginationResponse<{data:IeventBook[]}> , unkno
 export interface GetEventBookHandler
 extends RequestHandler<{bookId:string} , successResponse<{data:IeventBook}> , unknown , unknown>{}
 
+export interface UpdateEventBookHandler
+extends RequestHandler<{bookId:string} , successResponse<{data:IeventBook}> , {voucher:string} , unknown>{}
+
 export interface UpdateEventBookPaymentHandler
 extends RequestHandler<{bookId:string} , successResponse , unknown , unknown>{}

@@ -1,6 +1,7 @@
 import 'express-async-errors';
 
 import { getDateDiff } from './bookRoom.controller';
+import { Offer } from '../../models/offers.model';
 import { Plan } from '../../models/plan.model';
 import { RoomBooking } from '../../models/roomBooking.model';
 import { Room } from '../../models/rooms.model';
@@ -60,9 +61,19 @@ export const updateRoomBookHandler:UpdateRoomBookHandler = async (req,res,next)=
     hourPrice = plan.price;
   }
 
-  const totalPrice = (timeStamp.hours * hourPrice) * req.body.seatCount?req.body.seatCount:book.seatCount;
+  let totalPrice = (timeStamp.hours * hourPrice) * req.body.seatCount?req.body.seatCount:book.seatCount;
 
-  const updatedBook = await RoomBooking.findByIdAndUpdate(req.params.bookId , {startDate:req.body.startDate , endDate:req.body.endDate , totalPrice , seatCount:req.body.seatCount?req.body.seatCount:book.seatCount} , {new:true}).populate([
+
+  if (req.body.voucher) {
+    const voucher = await Offer.findOne({_id:req.body.voucher , to:{$gte : new Date()}});
+    if (!voucher) 
+      return next(new NotFoundError('voucher not found or expired'));
+
+    totalPrice = totalPrice * (1 - voucher.discount/100);
+  }
+
+
+  const updatedBook = await RoomBooking.findByIdAndUpdate(req.params.bookId , {startDate:req.body.startDate , endDate:req.body.endDate , totalPrice , seatCount:req.body.seatCount?req.body.seatCount:book.seatCount , voucher:req.body.voucher?req.body.voucher:null} , {new:true}).populate([
     {path:'user' , select:'email username'},
     {path:'room'},
     {path:'plan'}

@@ -17,10 +17,22 @@ export const env = {
   },
   key:{
     apikey:process.env.API_KEY
+  },
+  payment:{
+    baseUrl : process.env.PAYMENT_BASE_URL as string,
+    apiSecret : process.env.PAYMENT_API_SECRET as string,
+    apiKey : process.env.PAYMENT_API_KEY as string,
+    apiCookie : process.env.PAYMENT_API_COOKIE as string,
+    marchent_id : process.env.MARCHENT_ID as string
   }
 };
 
 export const checkEnvVariables = () => {
   if (!env.mongoDb.uri) throw new Error('env:MONGO_URI must be defined');
   if (!env.jwt.secret) throw new Error('env:JWT_KEY must be defined');
+  if (!env.payment.baseUrl) throw new Error('env:PAYMENT_BASE_URL must be defined');
+  if (!env.payment.apiSecret) throw new Error('env:PAYMENT_API_SECRET must be defined');
+  if (!env.payment.apiKey) throw new Error('env:PAYMENT_API_KEY must be defined');
+  if (!env.payment.apiCookie) throw new Error('env:PAYMENT_API_COOKIE must be defined');
+  if (!env.payment.marchent_id) throw new Error('env:MARCHENT_ID must be defined');
 };

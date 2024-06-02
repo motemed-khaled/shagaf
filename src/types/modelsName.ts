@@ -14,5 +14,6 @@ export enum MODELS{
     dayBook = 'dayBook',
     eventBook = 'eventBook',
     auditLog = 'logs',
-    memberBooking = 'memberBooking'
+    memberBooking = 'memberBooking',
+    payment = 'payment'
 }
