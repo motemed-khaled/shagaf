@@ -7,6 +7,7 @@ import { router as eventRoutes } from './event.routes';
 import { router as logierRouter } from './logier.routes';
 import { router as memberRouter } from './member.routes';
 import { router as offerRouter } from './offer.routes';
+import { router as payMentRouter } from './payment.routes';
 import { router as planRouter } from './plan.routes';
 import { router as productsRouter } from './products.routes';
 import { router as roomRouter } from './room.routes';
@@ -26,4 +27,5 @@ export const mountRoutes = async (app:Application)=>{
   app.use('/api/products' , productsRouter);
   app.use('/api/members' , memberRouter);
   app.use('/api/logier' , logierRouter);
+  app.use('/api/payment' , payMentRouter);
 };

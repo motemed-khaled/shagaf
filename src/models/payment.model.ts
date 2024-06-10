@@ -3,7 +3,7 @@ import { Schema, model, Document, Types } from 'mongoose';
 import { Ioffer } from './offers.model';
 import { MODELS } from '../types/modelsName';
 
-enum PaymentType {
+export enum PaymentType {
     dayBook = 'dayBook',
     eventBook = 'eventBook',
     memberBook = 'memberBook',
