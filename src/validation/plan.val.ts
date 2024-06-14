@@ -11,7 +11,7 @@ export const createPlanVal = [
 
 export const updatePlanVal = [
   param('planId').isMongoId().withMessage('Invalid planId parameter'),
-  body('price').optional().isInt({ min: 1 }).withMessage('Price must be a positive integer'),
+  body('price').optional().isFloat({ min: 1 }).withMessage('Price must be a positive integer'),
   body('stamp').optional().isIn(['Hour', 'Day', 'Month']).withMessage('Stamp must be one of: Hour, Day, Month'),
   validationMiddleware
 ];

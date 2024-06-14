@@ -5,7 +5,7 @@ import { validationMiddleware } from '../middlewares/global-validator.middleware
 
 
 export const createDayVal = [
-  body('price').isInt({ min: 1 }).withMessage('Price must be a positive integer'),
+  body('price').isFloat({ min: 1 }).withMessage('Price must be a positive integer'),
   body('title').isString().exists().withMessage('Title is required and must be a string'),
   body('type').isIn(['cake', 'decoration', 'session']).withMessage('Type must be one of "cake", "decoration", or "session"'),
   validationMiddleware
@@ -13,7 +13,7 @@ export const createDayVal = [
 
 export const updateDayVal = [
   param('dayId').isMongoId().withMessage('Invalid dayId parameter'),
-  body('price').optional().isInt({ min: 1 }).withMessage('Price must be a positive integer'),
+  body('price').optional().isFloat({ min: 1 }).withMessage('Price must be a positive integer'),
   body('title').optional().isString().exists().withMessage('Title must be a string'),
   body('type').optional().isIn(['cake', 'decoration', 'session']).withMessage('Type must be one of "cake", "decoration", or "session"'),
   validationMiddleware
