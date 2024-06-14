@@ -9,7 +9,7 @@ export const router = express.Router();
 
 
 
-router.get('/' , isauthenticated , val.getUsersVal , globalPaginationMiddleware , handler.getUsersHandler);
+router.get('/' , isauthenticated , val.getUsersVal , globalPaginationMiddleware , handler.getUsersPagination , handler.getUsersHandler);
 router.post('/signup' , val.signUpVal ,handler.sginUpHandler);
 router.post('/signin' , val.signInVal , handler.siginHandler);
 router.route('/verify').post(val.verifyUserVal , handler.verifyUserHandler);
