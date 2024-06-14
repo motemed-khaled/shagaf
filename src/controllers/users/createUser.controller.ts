@@ -5,6 +5,6 @@ import { CreateUserHandler } from '../../types/endpoints/user.endpoints';
 
 
 export const createUserHandler:CreateUserHandler = async (req,res)=>{
-  const user = await Users.create(req.body);
+  const user = await Users.create({...req.body , isVerified:true });
   res.status(201).json({message:'success' , data:user});
 };
