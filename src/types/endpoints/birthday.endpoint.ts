@@ -25,7 +25,7 @@ extends RequestHandler<{dayId:string} , successResponse , unknown , unknown>{}
 export interface DayBookHandler
 extends RequestHandler<unknown , successResponse<{data:IdayBook}> , Pick<IdayBook , 'startDate' | 'endDate' | 'products' | 'totalPrice' | 'user' | 'stuffDiscount' | 'pointDiscount'> , unknown>{}
 export interface UpdateDayBookHandler
-extends RequestHandler<{bookId:string} , successResponse<{data:IdayBook}> , Pick<IdayBook , 'startDate' | 'endDate' | 'voucher' | 'totalPrice' > , unknown>{}
+extends RequestHandler<{bookId:string} , successResponse<{data:IdayBook}> , Pick<IdayBook , 'startDate' | 'endDate' | 'voucher' | 'totalPrice' | 'status'> , unknown>{}
 
 export interface GetUserBookingHandler
 extends RequestHandler<unknown , successResponse<{data:IdayBook[]}> , unknown , unknown>{}

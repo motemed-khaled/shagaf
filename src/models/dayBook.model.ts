@@ -18,6 +18,7 @@ export interface IdayBook extends Document {
   paid: boolean;
   pointDiscount:number;
   stuffDiscount:number;
+  status:'pending' | 'accepted' | 'rejected'
 }
 
 const DayBookSchema = new Schema<IdayBook>({
@@ -31,6 +32,7 @@ const DayBookSchema = new Schema<IdayBook>({
   cancellationDate: { type: Date },
   pointDiscount:{type:Number  , default:0},
   stuffDiscount:{type:Number  , default:0},
+  status:{type:String , enum:['pending' , 'accepted' , 'rejected'] , default:'pending'}
 }, { timestamps: true, collection: MODELS.dayBook });
 
 type Details = {

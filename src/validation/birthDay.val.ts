@@ -40,7 +40,7 @@ export const getDaysVal = [
 ];
 
 export const dayBookVal = [
-  body('user').isMongoId(),
+  body('user').optional().isMongoId(),
   body('startDate').isISO8601().custom((val)=>{
     const date = new Date(val);
     const now = new Date();
@@ -66,18 +66,19 @@ export const dayBookVal = [
 
 export const UpdateDayBookVal = [
   param('bookId').isMongoId(),
-  body('startDate').isISO8601().custom((val)=>{
+  body('startDate').optional().isISO8601().custom((val)=>{
     const date = new Date(val);
     const now = new Date();
     if (date > now) return true;
     throw new Error('start date must be in the future');
   }),
-  body('endDate').isISO8601().custom((val , {req})=>{
+  body('endDate').optional().isISO8601().custom((val , {req})=>{
     const date = new Date(val);
     const start = new Date(req.body.startDate);
     if (date > start) return true;
     throw new Error('end date must be Greater than start date');
   }),
+  body('status').optional().isIn(['pending' , 'accepted' , 'rejected']),
   body('voucher').optional().isMongoId(),
   body('totalPrice').not().exists(),
   body('paid').not().exists(),
