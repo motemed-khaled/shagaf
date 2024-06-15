@@ -10,7 +10,8 @@ export const getBookHandler:GetBookHandler = async (req,res,next)=>{
   const book = await RoomBooking.findById(req.params.bookId).populate([
     {path:'user' , select:'email username'},
     {path:'room'},
-    {path:'plan'}
+    {path:'plan'},
+    {path:'member'}
   ]);
 
   if (!book) 

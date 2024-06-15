@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { model, Schema, Types } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
 
 import { AuditLog } from './bookingLog.schema';
 import { Imember } from './members.model';
@@ -8,11 +8,12 @@ import { Iusers } from './user.model';
 import { MODELS } from '../types/modelsName';
 
 
-export interface ImemberBooking {
+export interface ImemberBooking extends Document  {
     member: Types.ObjectId | Imember;
     user: Types.ObjectId | Iusers;
     voucher:Types.ObjectId | Ioffer;
     start: Date;
+    end:Date;
     paid: boolean;
     totalPrice:number;
     pointDiscount:number;
@@ -26,9 +27,9 @@ const memberBookingSchema = new Schema<ImemberBooking>({
   totalPrice:{type:Number , default:0},
   pointDiscount:{type:Number , default:0},
   stuffDiscount:{type:Number , default:0},
-  start: Date
+  start: Date,
+  end: Date,
 }, { timestamps: true, collection: MODELS.memberBooking });
-
 
 type Details = {
   [key: string]: any;

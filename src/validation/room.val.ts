@@ -196,3 +196,22 @@ export const updatePaymentVal = [
 ];
 
 
+export const bookMemberRoomVal = [
+  body('room').isMongoId(),
+  body('seatCount').isInt({min:1}),
+  body('startDate').isISO8601().custom((val)=>{
+    const date = new Date(val);
+    const now = new Date();
+    if (date > now) return true;
+    throw new Error('start date must be in the future');
+  }),
+  body('endDate').isISO8601().custom((val , {req})=>{
+    const date = new Date(val);
+    const now = new Date(req.body.startDate);
+    if (date > now) return true;
+    throw new Error('end date must be Greater than start date');
+  }),
+  body('user').isMongoId(),
+  body('member').isMongoId(),
+  validationMiddleware
+];

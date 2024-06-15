@@ -18,3 +18,4 @@ export * from './addCoffeeBook.controller';
 export * from './updateCoffee.controller';
 export * from './addExtraTime.controller';
 export * from './updatePayment.controller';
+export * from './bookMemberRoom.controller';

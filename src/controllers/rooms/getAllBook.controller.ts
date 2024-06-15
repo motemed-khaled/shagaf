@@ -50,7 +50,8 @@ export const getAllBookingHandler:GetAllBookingHandler = async (req,res)=>{
   const booking = await RoomBooking.find(req.pagination.filter).skip(req.pagination.skip).limit(req.pagination.limit).populate([
     {path:'user' , select:'email username'},
     {path:'room'},
-    {path:'plan'}
+    {path:'plan'},
+    {path:'member'}
   ]);
 
   const resultCount = await RoomBooking.find(req.pagination.filter).countDocuments();

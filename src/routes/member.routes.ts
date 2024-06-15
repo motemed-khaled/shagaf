@@ -9,7 +9,6 @@ import * as val from '../validation/member.val';
 
 export const router = express.Router();
 
-
 router.route('/')
   .post(isauthenticated , val.createMemberVal , handler.createMemberHandler)
   .get(globalPaginationMiddleware , val.getMembersVal , handler.getMembersHandler);

@@ -12,6 +12,7 @@ import * as val from '../validation/room.val';
 
 export const router = express.Router();
 
+router.route('/book/member').post(isauthenticated , val.bookMemberRoomVal , handler.bookRoomForMemberHandler);
 
 router.route('/')
   .post(isauthenticated , globalUploadMiddleware(FOLDERS.room, {

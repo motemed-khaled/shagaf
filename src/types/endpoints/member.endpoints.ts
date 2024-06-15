@@ -31,7 +31,7 @@ extends RequestHandler<unknown , PaginationResponse<{data:Imember[]}> ,unknown, 
 
 // booking
 export interface BookMemberShipHandler
-extends RequestHandler<unknown , successResponse<{data:ImemberBooking}> , Pick<ImemberBooking , 'member' | 'start' | 'user' | 'pointDiscount' | 'stuffDiscount'> , unknown>{}
+extends RequestHandler<unknown , successResponse<{data:ImemberBooking}> , Pick<ImemberBooking , 'member' | 'start' | 'end' | 'user' | 'pointDiscount' | 'stuffDiscount'> , unknown>{}
 
 export interface UpdateBookHandler
 extends RequestHandler<{bookId:string} , successResponse<{data:ImemberBooking}> , {start:Date , voucher:string} , unknown>{}

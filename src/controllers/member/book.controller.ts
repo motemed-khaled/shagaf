@@ -35,6 +35,8 @@ export const bookMemberHandler:BookMemberShipHandler = async (req,res,next)=>{
     
   }
 
+  req.body.end = calculateEndDate(req.body.start.toString() , member.duration , member.durationType);
+
   const book = await MemberBooking.create({
     ...req.body,
     user:user?req.body.user:req.loggedUser?.id,
@@ -43,4 +45,44 @@ export const bookMemberHandler:BookMemberShipHandler = async (req,res,next)=>{
 
   res.status(201).json({message:'success' , data:book});
 
+};
+
+
+const addDays = (date: Date, days: number): Date => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
+
+const addMonths = (date: Date, months: number): Date => {
+  const result = new Date(date);
+  result.setMonth(result.getMonth() + months);
+  return result;
+};
+
+const addYears = (date: Date, years: number): Date => {
+  const result = new Date(date);
+  result.setFullYear(result.getFullYear() + years);
+  return result;
+};
+type DurationType = 'Day' | 'Month' | 'Year';
+
+const calculateEndDate = (startDate: string, duration: number, durationType: DurationType): Date => {
+  let endDate = new Date(startDate);
+  
+  switch (durationType) {
+  case 'Day':
+    endDate = addDays(endDate, duration);
+    break;
+  case 'Month':
+    endDate = addMonths(endDate, duration);
+    break;
+  case 'Year':
+    endDate = addYears(endDate, duration);
+    break;
+  default:
+    throw new Error('Invalid duration type');
+  }
+
+  return endDate;
 };
