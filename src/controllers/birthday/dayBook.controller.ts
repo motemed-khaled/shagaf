@@ -1,7 +1,7 @@
 import 'express-async-errors';
 
+import { BirthDay } from '../../models/birthDay.model';
 import { DayBook } from '../../models/dayBook.model';
-import { Product } from '../../models/product.model';
 import { Users } from '../../models/user.model';
 import { DayBookHandler } from '../../types/endpoints/birthday.endpoint';
 import { BadRequestError } from '../../utils/errors/bad-request-error';
@@ -17,14 +17,14 @@ export const dayBookHandler:DayBookHandler = async (req,res,next)=>{
       return next(new NotFoundError(`user ${req.body.user} not found`));
   }
     
-  const products = await Product.countDocuments({_id:req.body.products.map(el=>el.product)});
+  const products = await BirthDay.countDocuments({_id:req.body.products.map(el=>el.product)});
   
   if (products != req.body.products.length) 
     return next(new BadRequestError('invalid products'));
   let  totalPrice:number = 0;
   
   for (let i = 0; i < req.body.products.length; i++) {
-    const product = await Product.findById(req.body.products[i].product);
+    const product = await BirthDay.findById(req.body.products[i].product);
     totalPrice += product!.price * req.body.products[i].count;
   }
 
