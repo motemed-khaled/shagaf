@@ -10,6 +10,6 @@ export const deletePlanHandler:DeletePlanHandler = async (req , res , next )=>{
   const deletedPlan = await Plan.findByIdAndDelete(req.params.planId);
   if (!deletedPlan) 
     return next(new NotFoundError('plan not found'));
-  Files.removeFiles(deletedPlan.icon);
+  Files.removeFiles(deletedPlan.icon?deletedPlan.icon:undefined);
   res.status(204).json({message:'success'});
 };

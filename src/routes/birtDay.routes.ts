@@ -18,7 +18,7 @@ router.route('/')
     maxSize: 50 * 1024 * 1024,
     fileTypes: ['image'],
   }).fields([{name:'cover' , maxCount:1}]) , val.createDayVal , checkRequiredFields({ fields: ['cover'] }) , handler.createDayHandler)
-  .get(val.getDaysVal , globalPaginationMiddleware , handler.getDaysHandler);
+  .get(val.getDaysVal , globalPaginationMiddleware , handler.getBirthdaysPagination , handler.getDaysHandler);
 
 
 router.route('/book')
