@@ -26,7 +26,7 @@ router.get('/book/user' , isauthenticated , handler.getUserBookingHandler);
 
 router.route('/book')
   .post( isauthenticated , val.bookRoomVal , handler.bookRoomHandler)
-  .get(isauthenticated , val.getAllBookingVal , globalPaginationMiddleware , handler.getAllBookingHandler);
+  .get(isauthenticated , val.getAllBookingVal , globalPaginationMiddleware , handler.getRoomBookingsPagination , handler.getAllBookingHandler);
 
 router.route('/book/:bookId')
   .patch(isauthenticated , val.updateBookVal , handler.updateRoomBookHandler)
