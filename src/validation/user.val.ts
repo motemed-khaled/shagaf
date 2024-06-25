@@ -44,7 +44,7 @@ export const updateUserVal = [
   }).withMessage('Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one number'),
   body('birthdate').optional().isISO8601().withMessage('Birthdate must be a valid ISO8601 date'),
   body('phone').optional().isMobilePhone(['ar-EG']).withMessage('Phone number must be a valid Egyptian phone number'),
-  body('email').not().exists().withMessage('Invalid email address'),
+  body('email').optional().isEmail().withMessage('email address required'),
   body('userType').optional().isIn(['manager' , 'stuff' , 'user' ]).withMessage('user must by one of this manager stuff user '),
   validationMiddleware
 ];

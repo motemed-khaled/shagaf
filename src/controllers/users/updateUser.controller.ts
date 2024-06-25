@@ -10,7 +10,7 @@ export const updateUserHandler:UpdateUserHandler = async (req,res,next)=>{
   if (!user) 
     return next(new NotFoundError('user notfound'));
 
-  const updatedUser = await Users.findByIdAndUpdate(req.params.userId , req.body , {new:true});
+  const updatedUser = await Users.findByIdAndUpdate(req.params.userId , req.body , {new:true , runValidators:true});
 
   res.status(200).json({message:'success' , data:updatedUser!});
 };
