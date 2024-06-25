@@ -16,7 +16,7 @@ export const updatePlanHandler:UpdatePlanHandler = async (req,res,next)=>{
     if (!plan) 
       return next(new NotFoundError(`plan not found ${req.params.planId}`));
     req.body.icon = `/media/${FOLDERS.plan}/${icon[0].filename}`;
-    Files.removeFiles(plan.icon);
+    Files.removeFiles(plan.icon ? plan.icon:undefined);
   }
 
   const updatedPlan = await Plan.findByIdAndUpdate(req.params.planId , req.body , {new:true});
