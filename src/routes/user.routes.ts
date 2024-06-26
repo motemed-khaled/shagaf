@@ -34,3 +34,4 @@ router.route('/admin/:userId').patch(isauthenticated , val.updateUserVal , handl
   .delete(isauthenticated , val.deleteUserVal , handler.deleteUserHandler);
 
 router.get('/:userId' , isauthenticated  , val.deleteUserVal, handler.getUserPointDiscountHandler);
+router.get('/profile/:userId' , isauthenticated  , val.deleteUserVal, handler.getUserHandler);

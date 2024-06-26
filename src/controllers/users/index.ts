@@ -12,3 +12,4 @@ export * from './createUser.controller';
 export * from './updateUser.controller';
 export * from './deleteUser.controller';
 export * from './getUserDiscountPoint.controller';
+export * from './getUser.controller';

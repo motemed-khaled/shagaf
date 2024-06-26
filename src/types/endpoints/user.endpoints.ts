@@ -67,3 +67,6 @@ extends RequestHandler<{userId:string} , successResponse , unknown , unknown>{}
 
 export interface GetUserPointsDiscountHandler 
 extends RequestHandler<{userId:string} , successResponse<{data:{discount:number}}> , unknown , unknown>{}
+
+export interface GetUserHandler
+extends RequestHandler<{userId:string} , successResponse<{data:Iusers}> , unknown , unknown>{}
