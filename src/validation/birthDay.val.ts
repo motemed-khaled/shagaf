@@ -99,5 +99,6 @@ export const getAllBookingVal = [
   query('totalPriceMin').optional().isFloat({ min: 0 }).withMessage('Total price minimum must be a positive number'),
   query('totalPriceMax').optional().isFloat({ min: 0 }).withMessage('Total price maximum must be a positive number'),
   query('paid').optional().isBoolean().withMessage('Paid must be a boolean'),
+  query('status').optional().isIn(['pending' , 'accepted' , 'rejected']).withMessage('status must be value of rejected , accepted , pending '),
   validationMiddleware
 ];

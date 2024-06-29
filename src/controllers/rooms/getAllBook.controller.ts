@@ -16,6 +16,7 @@ export const getRoomBookingsPagination: RequestHandler<
     startDate?: string;
     endDate?: string;
     paid?: string;
+    reservationPaid?:string;
   }
 > = async (req, res, next) => {
   req.pagination = req.pagination || {};
@@ -39,6 +40,9 @@ export const getRoomBookingsPagination: RequestHandler<
 
   if (req.query.paid) {
     req.pagination.filter.paid = req.query.paid === 'true';
+  }
+  if (req.query.reservationPaid) {
+    req.pagination.filter.reservationPaid = req.query.reservationPaid === 'true';
   }
 
   next();

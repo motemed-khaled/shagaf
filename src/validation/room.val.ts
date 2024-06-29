@@ -112,6 +112,7 @@ export const getAllBookingVal = [
   query('startDate').optional().isISO8601().toDate().withMessage('Invalid start date format'),
   query('endDate').optional().isISO8601().toDate().withMessage('Invalid end date format'),
   query('paid').optional().isBoolean().withMessage('Paid must be a boolean value'),
+  query('reservationPaid').optional().isBoolean().withMessage('reservationPaid must be a boolean value'),
   validationMiddleware
 ];
 

@@ -19,6 +19,7 @@ export const getDayBooksPagination: RequestHandler<
     totalPriceMax?: number;
     paid?: boolean;
     status?:string;
+    
   }
 > = async (req, res, next) => {
   req.pagination.filter = {};
