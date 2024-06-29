@@ -12,6 +12,9 @@ import * as val from '../validation/room.val';
 
 export const router = express.Router();
 
+
+router.route('/newBook').post( val.openBookVal , handler.openNewBookHandler);
+router.route('/newBook/:bookId').patch( val.closeBookVal , handler.closeBookHandler);
 router.route('/book/member').post(isauthenticated , val.bookMemberRoomVal , handler.bookRoomForMemberHandler);
 
 router.route('/')

@@ -20,15 +20,15 @@ export const signUpVal = [
 
 export const createUserVal = [
   body('username').isString().notEmpty().isLength({min: 3, max: 35}).trim().withMessage('Username must be between 3 and 35 characters'),
-  body('password').isStrongPassword({
+  body('password').optional().isStrongPassword({
     minLength: 8,
     minLowercase: 1,
     minUppercase: 1,
     minNumbers: 1,
   }).withMessage('Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one number'),
-  body('birthdate').isISO8601().withMessage('Birthdate must be a valid ISO8601 date'),
+  body('birthdate').optional().isISO8601().withMessage('Birthdate must be a valid ISO8601 date'),
   body('phone').isMobilePhone(['ar-EG']).withMessage('Phone number must be a valid Egyptian phone number'),
-  body('email').isEmail().withMessage('Invalid email address'),
+  body('email').optional().isEmail().withMessage('Invalid email address'),
   body('userType').optional().isIn(['manager' , 'stuff' , 'user' ]).withMessage('user must by one of this manager stuff user '),
   validationMiddleware
 ];

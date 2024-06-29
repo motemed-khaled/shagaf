@@ -34,8 +34,8 @@ export interface Iusers{
 
 const userSchema =  new Schema<Iusers>({
   username:{type:String , trim:true },
-  email:{type:String , unique:true},
-  phone:{type:String , unique:true},
+  email:{type:String , unique:true , sparse:true},
+  phone:{type:String , unique:true , sparse:true},
   password:{type:String , select:false},
   token:String,
   verificationCode: { code: String, expireAt: Date, reason: { type: String, default: null } },

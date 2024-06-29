@@ -71,6 +71,12 @@ extends RequestHandler<{bookId:string} , successResponse<{data:IroomBooking}> , 
 export interface AddExtraTimeHandler
 extends RequestHandler<{bookId:string}, successResponse<{data:IroomBooking}> , {extraTimeTo:Date , extraTimeFrom:Date} , unknown>{}
 
-
 export interface UpdatePaymentHandler
 extends RequestHandler<{bookId:string} , successResponse , Partial<Pick<IroomBooking , 'coffeePaid' | 'reservationPaid' | 'extraPaid'>> , unknown>{}
+
+
+export interface OpenNewBookHandler
+extends RequestHandler<unknown , successResponse<{data:IroomBooking}> , Pick<IroomBooking , 'user' | 'plan' | 'room' | 'startDate' | 'seatCount'> , unknown >{}
+
+export interface CloseBookHandler
+extends RequestHandler<{bookId:string} , successResponse<{data:IroomBooking}> , unknown , unknown>{}

@@ -215,3 +215,23 @@ export const bookMemberRoomVal = [
   body('member').isMongoId(),
   validationMiddleware
 ];
+
+
+export const openBookVal = [
+  body('user').isMongoId(),
+  body('room').isMongoId(),
+  body('seatCount').isInt({min:1}),
+  body('startDate').isISO8601().custom((val)=>{
+    const date = new Date(val);
+    const now = new Date();
+    if (date > now) return true;
+    throw new Error('start date must be in the future');
+  }),
+  body('plan').isMongoId(),
+  validationMiddleware
+];
+
+export const closeBookVal = [
+  param('bookId').isMongoId(),
+  validationMiddleware
+];

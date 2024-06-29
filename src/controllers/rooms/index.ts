@@ -19,3 +19,5 @@ export * from './updateCoffee.controller';
 export * from './addExtraTime.controller';
 export * from './updatePayment.controller';
 export * from './bookMemberRoom.controller';
+export * from './openNewBook.controller';
+export * from './closeBook.controller';
