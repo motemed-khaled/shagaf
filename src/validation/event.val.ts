@@ -11,7 +11,7 @@ export const createEventVal = [
   body('details').isArray({ min: 1 }).withMessage('Details must be a non-empty array'),
   body('details.*').isObject().withMessage('Each detail must be an object'),
   body('details.*.title').isString().exists().withMessage('Detail title is required and must be a string'),
-  body('location').isIn(['roxy', 'new cairo']).withMessage('Location must be either "roxy" or "new cairo"'),
+  body('location').isString().exists().withMessage('Location must string'),
   body('title').isString().exists().withMessage('Title is required and must be a string'),
   body('date').isISO8601().toDate()
     .withMessage('Date must be a valid ISO8601 date')
@@ -27,7 +27,7 @@ export const createEventVal = [
 export const updateEventVal = [
   param('eventId').isMongoId().withMessage('Invalid eventId parameter'),
   body('cost').optional().isInt({ min: 1 }).withMessage('Cost must be a positive integer'),
-  body('location').optional().isIn(['roxy', 'new cairo']).withMessage('Location must be either "roxy" or "new cairo"'),
+  body('location').optional().isString().exists().withMessage('Location must string'),
   body('title').optional().isString().exists().withMessage('Title must be a string'),
   body('date').optional().isISO8601().toDate()
     .withMessage('Date must be a valid ISO8601 date')
@@ -52,7 +52,7 @@ export const deleteEventVal = [
 
 export const getEventsVal = [
   query('title').optional().isString().withMessage('Title must be a string').trim().escape(),
-  query('location').optional().isIn(['roxy', 'new cairo']).withMessage('Location must be either "roxy" or "new cairo"'),
+  query('location').optional().isString().exists().withMessage('Location must string'),
   query('cost').optional().isNumeric().withMessage('Cost must be a number'),
   query('details').optional().isString().withMessage('Details must be a string').trim().escape(),
   query('startDate').optional().isISO8601().toDate().withMessage('Start date must be a valid ISO8601 date'),

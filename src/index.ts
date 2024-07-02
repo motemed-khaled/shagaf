@@ -3,7 +3,6 @@ import { app } from './app';
 import { dbConnection } from './config/database_connection';
 import { checkEnvVariables, env } from './config/env';
 import { startCronJob } from './corn/member.corn';
-import { Users } from './models/user.model';
 
 const start = async () => {
   checkEnvVariables();

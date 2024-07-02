@@ -12,7 +12,7 @@ export interface Iroom {
     description:string,
     seatsNum:number,
     seatsAvailable:number,
-    location:'roxy'|'new cairo',
+    location:string,
     plans:Types.ObjectId[] | Iplan[]
     type: 'shared' | 'private',
     amenities:{
@@ -45,7 +45,7 @@ export const Room = model<Iroom>(MODELS.room , new Schema<Iroom>({
   },
   location:{
     type:String,
-    enum:['roxy','new cairo']
+    default:null
   },
   plans:[{
     type:Schema.Types.ObjectId,

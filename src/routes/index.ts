@@ -4,6 +4,7 @@ import { router as addRouter } from './add.routes';
 import { router as birthDayRouter } from './birtDay.routes';
 import { router as categoriesRouter } from './category.routes';
 import { router as eventRoutes } from './event.routes';
+import { router as locationRouter } from './location.routes';
 import { router as logierRouter } from './logier.routes';
 import { router as memberRouter } from './member.routes';
 import { router as offerRouter } from './offer.routes';
@@ -28,4 +29,5 @@ export const mountRoutes = async (app:Application)=>{
   app.use('/api/members' , memberRouter);
   app.use('/api/logier' , logierRouter);
   app.use('/api/payment' , payMentRouter);
+  app.use('/api/location' , locationRouter);
 };

@@ -5,7 +5,7 @@ import { MODELS } from '../types/modelsName';
 
 
 export interface ISlider {
-    location:'roxy'|'new cairo',
+    location:string,
     title:string,
     rate:number,
     cover:string
@@ -15,7 +15,7 @@ export interface ISlider {
 export const Slider = model<ISlider>(MODELS.slider , new Schema<ISlider>({
   location:{
     type:String,
-    enum:['roxy','new cairo']
+    default:null
   },
   title:{
     type:String,

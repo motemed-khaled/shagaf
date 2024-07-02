@@ -5,7 +5,7 @@ import { validationMiddleware } from '../middlewares/global-validator.middleware
 
 
 export const createRoomVal = [
-  body('location').isIn(['roxy', 'new cairo']).withMessage('Location must be either "roxy" or "new cairo"'),
+  body('location').isString().exists().withMessage('Location must string'),
   body('description').isString().exists().withMessage('Description is required and must be a string'),
   body('seatsNum').isInt({ min: 1 }).withMessage('Seats number must be a positive integer'),
   body('plans').isArray({ min: 1 }).withMessage('Plans must be a non-empty array'),
@@ -17,7 +17,7 @@ export const createRoomVal = [
 
 export const UpdateRoomVal = [
   param('roomId').isMongoId().withMessage('Invalid room ID'),
-  body('location').optional().isIn(['roxy', 'new cairo']).withMessage('Location must be either "roxy" or "new cairo"'),
+  body('location').optional().isString().exists().withMessage('Location must string'),
   body('description').optional().isString().exists().withMessage('Description must be a string'),
   body('seatsNum').optional().isInt({ min: 1 }).withMessage('Seats number must be a positive integer'),
   body('plans').optional().isArray({ min: 1 }).withMessage('Plans must be a non-empty array'),
@@ -74,7 +74,7 @@ export const addAttachmentVal = [
 ];
 
 export const getRoomsVal = [
-  query('location').optional().isString().withMessage('Location must be a string'),
+  query('location').optional().isString().exists().withMessage('Location must string'),
   query('seatsAvailable').optional().isInt({ min: 0 }).withMessage('Seats available must be a non-negative integer'),
   query('seatsNum').optional().isInt({ min: 0 }).withMessage('Seats number must be a non-negative integer'),
   query('description').optional().isString().withMessage('Description must be a string'),
