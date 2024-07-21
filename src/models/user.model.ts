@@ -28,6 +28,7 @@ export interface Iusers {
   isVerified: boolean;
   userType: 'manager' | 'stuff' | 'user';
   point: number;
+  member:{count:number , endAt:Date}
 }
 
 const userSchema = new Schema<Iusers>(
@@ -45,6 +46,7 @@ const userSchema = new Schema<Iusers>(
     birthdate: Date,
     userType: { type: String, enum: ['manager', 'stuff', 'user'], default: 'user' },
     point: { type: Number, default: 0 },
+    member:{count:{type:Number , default:0} , endAt:Date}
   },
   { timestamps: true, collection: MODELS.user },
 );

@@ -8,7 +8,7 @@ export interface CreateMemberHandler
   extends RequestHandler<
     unknown,
     successResponse<{ data: Imember }>,
-    Pick<Imember, 'details' | 'title' | 'price' | 'duration' | 'durationType'>,
+    Pick<Imember, 'details' | 'title' | 'price' | 'duration' | 'durationType' | 'end' | 'type'>,
     unknown
   > {}
 
@@ -16,7 +16,7 @@ export interface UpdateMemberHandler
   extends RequestHandler<
     { memberId: string },
     successResponse<{ data: Imember }>,
-    Pick<Imember, 'title' | 'price' | 'duration' | 'durationType'>,
+    Pick<Imember, 'title' | 'price' | 'duration' | 'durationType' | 'details' | 'end' | 'type'>,
     unknown
   > {}
 
@@ -45,6 +45,8 @@ export interface GetMemberHandler
 export interface GetMembersHandler
   extends RequestHandler<unknown, PaginationResponse<{ data: Imember[] }>, unknown, unknown> {}
 
+
+  
 // booking
 export interface BookMemberShipHandler
   extends RequestHandler<
