@@ -2,8 +2,6 @@ import { param, query } from 'express-validator';
 
 import { validationMiddleware } from '../middlewares/global-validator.middleware';
 
-
-
 export const validateLogierVal = [
   param('bookId').isMongoId().withMessage('invalid book id format'),
   query('user').optional().isMongoId().withMessage('Invalid user ID format'),
@@ -13,5 +11,5 @@ export const validateLogierVal = [
   query('startDate').optional().isISO8601().toDate().withMessage('Invalid start date format'),
   query('endDate').optional().isISO8601().toDate().withMessage('Invalid end date format'),
   query('details').optional().isString().withMessage('Details must be a string'),
-  validationMiddleware
+  validationMiddleware,
 ];

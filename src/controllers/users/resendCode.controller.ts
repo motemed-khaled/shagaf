@@ -10,14 +10,14 @@ import { UnauthorizedError } from '../../utils/errors/un-authorizedError';
 import { generateRandom6Digit } from '../../utils/gitRandom6Dugut';
 import { sendEmail } from '../../utils/sendMail';
 
-
-
-export const resendVerificationCodeHandler:ResendVerificationCodeHandler = async (req,res,next)=>{
-  const user = await Users.findOne({email:req.body.email});
-  if (!user) 
-    return next(new NotFoundError('user not found'));
-  if (!user.verificationCode?.reason)
-    return next(new UnauthorizedError());
+export const resendVerificationCodeHandler: ResendVerificationCodeHandler = async (
+  req,
+  res,
+  next,
+) => {
+  const user = await Users.findOne({ email: req.body.email });
+  if (!user) return next(new NotFoundError('user not found'));
+  if (!user.verificationCode?.reason) return next(new UnauthorizedError());
   const currentTime = Date.now();
   const expireTime = new Date(user.verificationCode.expireAt || '0').getTime();
   if (currentTime < expireTime)
@@ -35,13 +35,13 @@ export const resendVerificationCodeHandler:ResendVerificationCodeHandler = async
   };
 
   try {
-    await sendEmail({email:user.email , subject:'verification code' , message:code});
+    await sendEmail({ email: user.email, subject: 'verification code', message: code });
   } catch (error) {
-    user.verificationCode.code=undefined;
+    user.verificationCode.code = undefined;
     user.verificationCode.expireAt = undefined;
     await user.save();
     return next(new ServerError('we have an error for sending mail'));
   }
   await user.save();
-  res.status(200).json({message:'success'});
+  res.status(200).json({ message: 'success' });
 };

@@ -16,3 +16,27 @@
 2024-07-02T11:04:29.184Z [31merror[39m: Error creating payment: Request failed with status code 404
 2024-07-02T11:08:40.211Z [31merror[39m: Error creating payment: Request failed with status code 404
 2024-07-02T11:08:40.215Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-02T15:49:17.501Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-02T15:49:17.503Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-02T15:52:27.678Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-02T15:52:27.680Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-02T15:59:16.553Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-02T15:59:16.556Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-02T16:03:16.838Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-02T16:03:16.841Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-02T16:05:03.704Z [31merror[39m: Error creating payment: getaddrinfo ENOTFOUND api.kashier.com
+2024-07-02T16:05:03.706Z [31merror[39m: Error creating payment: getaddrinfo ENOTFOUND api.kashier.com
+2024-07-04T16:23:07.647Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:23:07.649Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:29:07.237Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:29:07.240Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:30:22.452Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:30:22.454Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:35:52.205Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:35:52.207Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:38:50.128Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:38:50.131Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:41:56.617Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T16:41:56.619Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T17:09:30.623Z [31merror[39m: Error creating payment: Request failed with status code 404
+2024-07-04T17:09:30.626Z [31merror[39m: Error creating payment: Request failed with status code 404

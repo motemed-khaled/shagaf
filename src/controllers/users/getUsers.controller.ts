@@ -16,7 +16,7 @@ export const getUsersPagination: RequestHandler<
     isVerified?: string;
     birthdateFrom?: string;
     birthdateTo?: string;
-    userType?: 'manager' | 'stuff' | 'user'
+    userType?: 'manager' | 'stuff' | 'user';
   }
 > = async (req, res, next) => {
   try {
@@ -39,7 +39,7 @@ export const getUsersPagination: RequestHandler<
     }
 
     if (req.query.userType) {
-      req.pagination.filter.userType = { $eq: req.query.userType }; 
+      req.pagination.filter.userType = { $eq: req.query.userType };
     }
 
     if (req.query.birthdateFrom && req.query.birthdateTo) {
@@ -59,18 +59,19 @@ export const getUsersPagination: RequestHandler<
   }
 };
 
-
-export const getUsersHandler:GetAllUsersHandler = async (req,res)=>{
-  const users = await Users.find(req.pagination.filter).limit(req.pagination.limit).skip(req.pagination.skip);
+export const getUsersHandler: GetAllUsersHandler = async (req, res) => {
+  const users = await Users.find(req.pagination.filter)
+    .limit(req.pagination.limit)
+    .skip(req.pagination.skip);
 
   const resultCount = await Users.find(req.pagination.filter).countDocuments();
   res.status(200).json({
-    message:'success',
-    pagination:{
-      currentPage:req.pagination.page,
+    message: 'success',
+    pagination: {
+      currentPage: req.pagination.page,
       resultCount,
-      totalPages:Math.ceil(resultCount/req.pagination.limit)
+      totalPages: Math.ceil(resultCount / req.pagination.limit),
     },
-    data:users
+    data: users,
   });
 };

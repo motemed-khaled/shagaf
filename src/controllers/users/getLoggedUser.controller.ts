@@ -4,11 +4,8 @@ import { Users } from '../../models/user.model';
 import { GetLoggedUserHandler } from '../../types/endpoints/user.endpoints';
 import { NotFoundError } from '../../utils/errors/notfound-error';
 
-
-
-export const getLoggedUserHandler:GetLoggedUserHandler = async (req,res,next)=>{
+export const getLoggedUserHandler: GetLoggedUserHandler = async (req, res, next) => {
   const user = await Users.findById(req.loggedUser?.id);
-  if (!user) 
-    return next(new NotFoundError('user not found'));
-  res.status(200).json({message:'success' , data:user});
+  if (!user) return next(new NotFoundError('user not found'));
+  res.status(200).json({ message: 'success', data: user });
 };

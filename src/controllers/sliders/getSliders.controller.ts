@@ -3,8 +3,7 @@ import 'express-async-errors';
 import { Slider } from '../../models/slider.model';
 import { GetSlidersHandler } from '../../types/endpoints/slider.endpoints';
 
-
-export const getSlidersHandler:GetSlidersHandler = async (req,res)=>{
+export const getSlidersHandler: GetSlidersHandler = async (req, res) => {
   const sliders = await Slider.find();
-  res.status(200).json({message:'success' , data:sliders});
+  res.status(200).json({ message: 'success', data: sliders });
 };

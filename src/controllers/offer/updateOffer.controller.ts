@@ -8,29 +8,38 @@ import { BadRequestError } from '../../utils/errors/bad-request-error';
 import { NotFoundError } from '../../utils/errors/notfound-error';
 import { Files } from '../../utils/file';
 
-
-export const updateOfferHandler:UpdateOfferHandler = async (req,res,next)=>{
+export const updateOfferHandler: UpdateOfferHandler = async (req, res, next) => {
   const offer = await Offer.findById(req.params.offerId);
-  if (!offer) 
-    return next(new NotFoundError('offer not found'));
+  if (!offer) return next(new NotFoundError('offer not found'));
 
   if (req.body.users) {
-    const usersCount = await Users.countDocuments({_id:req.body.users.map(el=>el)});
-    if (req.body.users.length != usersCount) 
-      return next(new BadRequestError('invalid users'));
+    const usersCount = await Users.countDocuments({ _id: req.body.users.map((el) => el) });
+    if (req.body.users.length != usersCount) return next(new BadRequestError('invalid users'));
+  }
+
+  if (req.body.birthDay) {
+    const date = new Date(req.body.birthDay);
+    const startOfDay = new Date(date.setUTCHours(0, 0, 0, 0));
+    const endOfDay = new Date(date.setUTCHours(24, 0, 0, 0));
+    const users = await Users.find({
+      birthdate: {
+        $gte: startOfDay,
+        $lt: endOfDay,
+      },
+    });
+
+    users.forEach((user) => req.body.users.push(user._id));
   }
 
   const cover = <Express.Multer.File[]>(req.files as any).cover;
 
-  if (cover.length){
+  if (cover.length) {
     req.body.cover = `/media/${FOLDERS.offer}/${cover[0].filename}`;
     Files.removeFiles(offer.cover);
   }
 
-  const updatedOffer = await Offer.findByIdAndUpdate(req.params.offerId , req.body , {new:true});
-  if (!updatedOffer) 
-    return next(new BadRequestError('failed to update offer'));
+  const updatedOffer = await Offer.findByIdAndUpdate(req.params.offerId, req.body, { new: true });
+  if (!updatedOffer) return next(new BadRequestError('failed to update offer'));
 
-  res.status(200).json({message:'success' , data:updatedOffer});
-
+  res.status(200).json({ message: 'success', data: updatedOffer });
 };

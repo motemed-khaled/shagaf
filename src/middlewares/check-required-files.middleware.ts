@@ -3,7 +3,6 @@ import { RequestHandler } from 'express';
 
 import { BadRequestError } from '../utils/errors/bad-request-error';
 
-
 interface Ioptions {
   single?: string;
   array?: string;

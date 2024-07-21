@@ -5,8 +5,7 @@ import { RequestHandler } from 'express';
 import { EventBook } from '../../models/eventBook.model';
 import { GetEventsBookHandler } from '../../types/endpoints/event.endpoints';
 
-
-export const getEventBooksPagination:RequestHandler<
+export const getEventBooksPagination: RequestHandler<
   unknown,
   unknown,
   unknown,
@@ -18,7 +17,6 @@ export const getEventBooksPagination:RequestHandler<
     totalPriceMax?: number;
   }
 > = async (req, res, next) => {
-
   req.pagination.filter = {};
 
   const { user, event, date, totalPriceMin, totalPriceMax } = req.query;
@@ -48,21 +46,21 @@ export const getEventBooksPagination:RequestHandler<
   next();
 };
 
-
-export const getEventsBookingHandler:GetEventsBookHandler = async (req,res)=>{
+export const getEventsBookingHandler: GetEventsBookHandler = async (req, res) => {
   const booking = await EventBook.find(req.pagination.filter).populate([
-    {path:'user' , select:'email username'},
-    {path:'event'}
+    { path: 'user', select: 'email username' },
+    { path: 'event' },
   ]);
 
   const resultCount = await EventBook.find(req.pagination.filter).countDocuments();
 
   res.status(200).json({
-    message:'success' ,
-    pagination:{
-      currentPage:req.pagination.page,
+    message: 'success',
+    pagination: {
+      currentPage: req.pagination.page,
       resultCount,
-      totalPages:Math.ceil(resultCount/req.pagination.limit)
+      totalPages: Math.ceil(resultCount / req.pagination.limit),
     },
-    data:booking});
+    data: booking,
+  });
 };

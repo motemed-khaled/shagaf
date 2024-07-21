@@ -15,16 +15,16 @@ export const env = {
   jwt: {
     secret: process.env.JWT_KEY as string,
   },
-  key:{
-    apikey:process.env.API_KEY
+  key: {
+    apikey: process.env.API_KEY,
   },
-  payment:{
-    baseUrl : process.env.PAYMENT_BASE_URL as string,
-    apiSecret : process.env.PAYMENT_API_SECRET as string,
-    apiKey : process.env.PAYMENT_API_KEY as string,
-    apiCookie : process.env.PAYMENT_API_COOKIE as string,
-    marchent_id : process.env.MARCHENT_ID as string
-  }
+  payment: {
+    baseUrl: process.env.PAYMENT_BASE_URL as string,
+    apiSecret: process.env.PAYMENT_API_SECRET as string,
+    apiKey: process.env.PAYMENT_API_KEY as string,
+    apiCookie: process.env.PAYMENT_API_COOKIE as string,
+    marchent_id: process.env.MARCHENT_ID as string,
+  },
 };
 
 export const checkEnvVariables = () => {

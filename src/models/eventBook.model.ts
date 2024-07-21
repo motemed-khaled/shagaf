@@ -15,19 +15,22 @@ export interface IeventBook extends Document {
   totalPrice: number;
   date: Date;
   paid: boolean;
-  pointDiscount:number;
-  stuffDiscount:number;
+  pointDiscount: number;
+  stuffDiscount: number;
 }
 
-const EventBookSchema = new Schema<IeventBook>({
-  user: { type: Schema.Types.ObjectId, ref: MODELS.user, required: true },
-  event: { type: Schema.Types.ObjectId, ref: MODELS.event, required: true },
-  totalPrice: { type: Number, default: 0 },
-  paid: { type: Boolean, default: false },
-  date: { type: Date, required: true },
-  pointDiscount:{type:Number , default:0},
-  stuffDiscount:{type:Number , default:0}
-}, { timestamps: true, collection: MODELS.eventBook });
+const EventBookSchema = new Schema<IeventBook>(
+  {
+    user: { type: Schema.Types.ObjectId, ref: MODELS.user, required: true },
+    event: { type: Schema.Types.ObjectId, ref: MODELS.event, required: true },
+    totalPrice: { type: Number, default: 0 },
+    paid: { type: Boolean, default: false },
+    date: { type: Date, required: true },
+    pointDiscount: { type: Number, default: 0 },
+    stuffDiscount: { type: Number, default: 0 },
+  },
+  { timestamps: true, collection: MODELS.eventBook },
+);
 
 type Details = {
   [key: string]: any;
@@ -40,13 +43,13 @@ EventBookSchema.pre('save', async function (next) {
       action: 'create',
       targetModel: MODELS.eventBook,
       targetId: this._id,
-      details: this.toObject()
+      details: this.toObject(),
     });
   } else {
     const modifiedFields = this.modifiedPaths();
     const details: Details = {}; // Using the Details type
 
-    modifiedFields.forEach(field => {
+    modifiedFields.forEach((field) => {
       details[field] = this.get(field);
     });
 
@@ -55,7 +58,7 @@ EventBookSchema.pre('save', async function (next) {
       action: 'update',
       targetModel: MODELS.eventBook,
       targetId: this._id,
-      details
+      details,
     });
   }
   next();
@@ -69,7 +72,7 @@ async function logDelete(this: any, next: Function) {
         user: docToDelete.user,
         action: 'delete',
         targetModel: MODELS.eventBook,
-        targetId: docToDelete._id
+        targetId: docToDelete._id,
       });
     }
   } catch (error) {

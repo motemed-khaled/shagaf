@@ -5,7 +5,6 @@ import { RequestHandler } from 'express';
 import { Event } from '../../models/event.model';
 import { GetEventsHandler } from '../../types/endpoints/event.endpoints';
 
-
 export const getEventsPagination: RequestHandler<
   unknown,
   unknown,
@@ -26,7 +25,9 @@ export const getEventsPagination: RequestHandler<
   }
 
   if (req.query.location) {
-    req.pagination.filter.location = { $in: Array.isArray(req.query.location) ? req.query.location : [req.query.location] };
+    req.pagination.filter.location = {
+      $in: Array.isArray(req.query.location) ? req.query.location : [req.query.location],
+    };
   }
 
   if (req.query.cost) {
@@ -40,7 +41,7 @@ export const getEventsPagination: RequestHandler<
   if (req.query.startDate && req.query.endDate) {
     req.pagination.filter.date = {
       $gte: new Date(req.query.startDate),
-      $lte: new Date(req.query.endDate)
+      $lte: new Date(req.query.endDate),
     };
   } else if (req.query.startDate) {
     req.pagination.filter.date = { $gte: new Date(req.query.startDate) };
@@ -50,18 +51,20 @@ export const getEventsPagination: RequestHandler<
   next();
 };
 
-export const getEventsHandler:GetEventsHandler = async (req,res)=>{
-  const events = await Event.find(req.pagination.filter).limit(req.pagination.limit).skip(req.pagination.skip);
+export const getEventsHandler: GetEventsHandler = async (req, res) => {
+  const events = await Event.find(req.pagination.filter)
+    .limit(req.pagination.limit)
+    .skip(req.pagination.skip);
 
   const resultCount = await Event.find(req.pagination.filter).countDocuments();
 
   res.status(200).json({
-    message:'success',
-    pagination:{
-      currentPage:req.pagination.page,
+    message: 'success',
+    pagination: {
+      currentPage: req.pagination.page,
       resultCount,
-      totalPages:Math.ceil(resultCount/req.pagination.limit)
+      totalPages: Math.ceil(resultCount / req.pagination.limit),
     },
-    data:events
+    data: events,
   });
 };

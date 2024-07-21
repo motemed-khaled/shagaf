@@ -7,29 +7,31 @@ import { Ioffer } from './offers.model';
 import { Iusers } from './user.model';
 import { MODELS } from '../types/modelsName';
 
-
-export interface ImemberBooking extends Document  {
-    member: Types.ObjectId | Imember;
-    user: Types.ObjectId | Iusers;
-    voucher:Types.ObjectId | Ioffer;
-    start: Date;
-    end:Date;
-    paid: boolean;
-    totalPrice:number;
-    pointDiscount:number;
-    stuffDiscount:number;
+export interface ImemberBooking extends Document {
+  member: Types.ObjectId | Imember;
+  user: Types.ObjectId | Iusers;
+  voucher: Types.ObjectId | Ioffer;
+  start: Date;
+  end: Date;
+  paid: boolean;
+  totalPrice: number;
+  pointDiscount: number;
+  stuffDiscount: number;
 }
 
-const memberBookingSchema = new Schema<ImemberBooking>({
-  member: { type: Schema.Types.ObjectId, ref: MODELS.member },
-  user: { type: Schema.Types.ObjectId, ref: MODELS.user },
-  paid: { type: Boolean, default: false },
-  totalPrice:{type:Number , default:0},
-  pointDiscount:{type:Number , default:0},
-  stuffDiscount:{type:Number , default:0},
-  start: Date,
-  end: Date,
-}, { timestamps: true, collection: MODELS.memberBooking });
+const memberBookingSchema = new Schema<ImemberBooking>(
+  {
+    member: { type: Schema.Types.ObjectId, ref: MODELS.member },
+    user: { type: Schema.Types.ObjectId, ref: MODELS.user },
+    paid: { type: Boolean, default: false },
+    totalPrice: { type: Number, default: 0 },
+    pointDiscount: { type: Number, default: 0 },
+    stuffDiscount: { type: Number, default: 0 },
+    start: Date,
+    end: Date,
+  },
+  { timestamps: true, collection: MODELS.memberBooking },
+);
 
 type Details = {
   [key: string]: any;
@@ -42,13 +44,13 @@ memberBookingSchema.pre('save', async function (next) {
       action: 'create',
       targetModel: MODELS.memberBooking,
       targetId: this._id,
-      details: this.toObject()
+      details: this.toObject(),
     });
   } else {
     const modifiedFields = this.modifiedPaths();
     const details: Details = {}; // Using the Details type
 
-    modifiedFields.forEach(field => {
+    modifiedFields.forEach((field) => {
       details[field] = this.get(field);
     });
 
@@ -57,7 +59,7 @@ memberBookingSchema.pre('save', async function (next) {
       action: 'update',
       targetModel: MODELS.memberBooking,
       targetId: this._id,
-      details
+      details,
     });
   }
   next();
@@ -71,7 +73,7 @@ async function logDelete(this: any, next: Function) {
         user: docToDelete.user,
         action: 'delete',
         targetModel: MODELS.memberBooking,
-        targetId: docToDelete._id
+        targetId: docToDelete._id,
       });
     }
   } catch (error) {

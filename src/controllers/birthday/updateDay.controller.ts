@@ -7,13 +7,10 @@ import { BadRequestError } from '../../utils/errors/bad-request-error';
 import { NotFoundError } from '../../utils/errors/notfound-error';
 import { Files } from '../../utils/file';
 
-
-
-export const updateDayHandler:UpdateDayHandler = async (req,res,next)=>{
+export const updateDayHandler: UpdateDayHandler = async (req, res, next) => {
   const day = await BirthDay.findById(req.params.dayId);
 
-  if (!day) 
-    return next(new NotFoundError('day not found'));
+  if (!day) return next(new NotFoundError('day not found'));
 
   const cover = <Express.Multer.File[]>(req.files as any).cover;
 
@@ -22,10 +19,8 @@ export const updateDayHandler:UpdateDayHandler = async (req,res,next)=>{
     Files.removeFiles(day.cover);
   }
 
-  const updatedDay = await BirthDay.findByIdAndUpdate(req.params.dayId , req.body , {new:true});
-  if (!updatedDay) 
-    return next(new BadRequestError('failed to update day'));
+  const updatedDay = await BirthDay.findByIdAndUpdate(req.params.dayId, req.body, { new: true });
+  if (!updatedDay) return next(new BadRequestError('failed to update day'));
 
-  res.status(200).json({message:'success' , data:updatedDay});
-
+  res.status(200).json({ message: 'success', data: updatedDay });
 };

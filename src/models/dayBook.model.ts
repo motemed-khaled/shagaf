@@ -10,30 +10,38 @@ import { MODELS } from '../types/modelsName';
 export interface IdayBook extends Document {
   user: Types.ObjectId | Iusers;
   voucher: Types.ObjectId | Ioffer;
-  products: { product: Types.ObjectId | Ibirthday, count: number }[];
+  products: { product: Types.ObjectId | Ibirthday; count: number }[];
   startDate: Date;
   endDate: Date;
   totalPrice: number;
   cancellationDate: Date;
   paid: boolean;
-  pointDiscount:number;
-  stuffDiscount:number;
-  status:'pending' | 'accepted' | 'rejected'
+  pointDiscount: number;
+  stuffDiscount: number;
+  status: 'pending' | 'accepted' | 'rejected';
 }
 
-const DayBookSchema = new Schema<IdayBook>({
-  user: { type: Schema.Types.ObjectId, ref: MODELS.user },
-  voucher: { type: Schema.Types.ObjectId, ref: MODELS.offer },
-  products: [{ product: { type: Schema.Types.ObjectId, ref: MODELS.birthDay }, count: { type: Number, default: 1 } }],
-  totalPrice: { type: Number, default: 0 },
-  paid: { type: Boolean, default: false },
-  startDate: { type: Date },
-  endDate: { type: Date },
-  cancellationDate: { type: Date },
-  pointDiscount:{type:Number  , default:0},
-  stuffDiscount:{type:Number  , default:0},
-  status:{type:String , enum:['pending' , 'accepted' , 'rejected'] , default:'pending'}
-}, { timestamps: true, collection: MODELS.dayBook });
+const DayBookSchema = new Schema<IdayBook>(
+  {
+    user: { type: Schema.Types.ObjectId, ref: MODELS.user },
+    voucher: { type: Schema.Types.ObjectId, ref: MODELS.offer },
+    products: [
+      {
+        product: { type: Schema.Types.ObjectId, ref: MODELS.birthDay },
+        count: { type: Number, default: 1 },
+      },
+    ],
+    totalPrice: { type: Number, default: 0 },
+    paid: { type: Boolean, default: false },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    cancellationDate: { type: Date },
+    pointDiscount: { type: Number, default: 0 },
+    stuffDiscount: { type: Number, default: 0 },
+    status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' },
+  },
+  { timestamps: true, collection: MODELS.dayBook },
+);
 
 type Details = {
   [key: string]: any;
@@ -46,13 +54,13 @@ DayBookSchema.pre('save', async function (next) {
       action: 'create',
       targetModel: MODELS.dayBook,
       targetId: this._id,
-      details: this.toObject()
+      details: this.toObject(),
     });
   } else {
     const modifiedFields = this.modifiedPaths();
     const details: Details = {};
 
-    modifiedFields.forEach(field => {
+    modifiedFields.forEach((field) => {
       details[field] = this.get(field);
     });
 
@@ -61,7 +69,7 @@ DayBookSchema.pre('save', async function (next) {
       action: 'update',
       targetModel: MODELS.dayBook,
       targetId: this._id,
-      details
+      details,
     });
   }
   next();
@@ -75,7 +83,7 @@ async function logDelete(this: any, next: Function) {
         user: docToDelete.user,
         action: 'delete',
         targetModel: MODELS.dayBook,
-        targetId: docToDelete._id
+        targetId: docToDelete._id,
       });
     }
   } catch (error) {

@@ -5,8 +5,6 @@ import { RequestHandler } from 'express';
 import { AuditLog } from '../../models/bookingLog.schema';
 import { GetLogierForBookingHandler } from '../../types/endpoints/roomBookingLog.endpoint';
 
-
-
 export const getAuditLogsPagination: RequestHandler<
   unknown,
   unknown,
@@ -27,15 +25,15 @@ export const getAuditLogsPagination: RequestHandler<
   if (req.query.user) {
     req.pagination.filter.user = { $eq: req.query.user };
   }
-  
+
   if (req.query.action) {
     req.pagination.filter.action = { $regex: req.query.action, $options: 'i' };
   }
-  
+
   if (req.query.targetModel) {
     req.pagination.filter.targetModel = { $regex: req.query.targetModel, $options: 'i' };
   }
-  
+
   if (req.query.targetId) {
     req.pagination.filter.targetId = { $eq: req.query.targetId };
   }
@@ -57,21 +55,24 @@ export const getAuditLogsPagination: RequestHandler<
   next();
 };
 
+export const getLogierForBookingHandler: GetLogierForBookingHandler = async (req, res) => {
+  const logier = await AuditLog.find({ targetId: req.params.bookId, ...req.pagination.filter })
+    .skip(req.pagination.skip)
+    .limit(req.pagination.limit)
+    .populate([{ path: 'user' }]);
 
-export const getLogierForBookingHandler:GetLogierForBookingHandler = async (req,res)=>{
-  const logier = await AuditLog.find({targetId:req.params.bookId , ...req.pagination.filter})
-    .skip(req.pagination.skip).limit(req.pagination.limit)
-    .populate([{path:'user'}]);
-
-  const resultCount = await AuditLog.countDocuments({targetId:req.params.bookId , ...req.pagination.filter});
+  const resultCount = await AuditLog.countDocuments({
+    targetId: req.params.bookId,
+    ...req.pagination.filter,
+  });
 
   res.status(200).json({
-    message:'success',
-    pagination:{
-      currentPage:req.pagination.page,
+    message: 'success',
+    pagination: {
+      currentPage: req.pagination.page,
       resultCount,
-      totalPages:Math.ceil(resultCount/req.pagination.limit)
+      totalPages: Math.ceil(resultCount / req.pagination.limit),
     },
-    data:logier
+    data: logier,
   });
 };

@@ -7,7 +7,6 @@ import { v4 } from 'uuid';
 import { FOLDERS } from '../types/folders';
 import { BadRequestError } from '../utils/errors/bad-request-error';
 
-
 interface uploadOptions {
   fileTypes?: string[];
   maxSize?: number;

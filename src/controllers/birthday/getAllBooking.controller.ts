@@ -5,7 +5,6 @@ import { RequestHandler } from 'express';
 import { DayBook } from '../../models/dayBook.model';
 import { GetAllBookingHandler } from '../../types/endpoints/birthday.endpoint';
 
-
 export const getDayBooksPagination: RequestHandler<
   unknown,
   unknown,
@@ -18,8 +17,7 @@ export const getDayBooksPagination: RequestHandler<
     totalPriceMin?: number;
     totalPriceMax?: number;
     paid?: boolean;
-    status?:string;
-    
+    status?: string;
   }
 > = async (req, res, next) => {
   req.pagination.filter = {};
@@ -60,22 +58,21 @@ export const getDayBooksPagination: RequestHandler<
   next();
 };
 
-
-export const getAllBookingHandler:GetAllBookingHandler =  async (req,res)=>{
-  const booking = await DayBook.find(req.pagination.filter).skip(req.pagination.skip).limit(req.pagination.limit).populate([
-    {path:'user' , select:'username email'},
-    {path:'products.product'}
-  ]);
+export const getAllBookingHandler: GetAllBookingHandler = async (req, res) => {
+  const booking = await DayBook.find(req.pagination.filter)
+    .skip(req.pagination.skip)
+    .limit(req.pagination.limit)
+    .populate([{ path: 'user', select: 'username email' }, { path: 'products.product' }]);
 
   const resultCount = await DayBook.find(req.pagination.filter).countDocuments();
 
   res.status(200).json({
-    message:'success',
-    pagination:{
-      currentPage:req.pagination.page,
+    message: 'success',
+    pagination: {
+      currentPage: req.pagination.page,
       resultCount,
-      totalPages:Math.ceil(resultCount/req.pagination.limit)
+      totalPages: Math.ceil(resultCount / req.pagination.limit),
     },
-    data:booking
+    data: booking,
   });
 };

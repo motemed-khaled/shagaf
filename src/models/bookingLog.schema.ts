@@ -18,7 +18,7 @@ const auditLogSchema = new Schema<IAuditLog>({
   targetModel: { type: String, required: true },
   targetId: { type: Schema.Types.ObjectId, required: true },
   timestamp: { type: Date, default: Date.now },
-  details: { type: Schema.Types.Mixed }
+  details: { type: Schema.Types.Mixed },
 });
 
 export const AuditLog = model<IAuditLog>(MODELS.auditLog, auditLogSchema);

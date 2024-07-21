@@ -13,7 +13,6 @@ const saveFiles = (folder: string, ...files: (Express.Multer.File | undefined)[]
 
 const removeFiles = (...filePaths: (string | undefined)[]) => {
   filePaths.forEach((filePath) => {
-    
     if (filePath) fs.unlinkSync(path.join(__dirname, '../../', filePath));
   });
 };

@@ -5,7 +5,6 @@ import { RequestHandler } from 'express';
 import { MemberBooking } from '../../models/memberBooking.model';
 import { GetMembersBookingHandler } from '../../types/endpoints/member.endpoints';
 
-
 export const getMemberBookingsPagination: RequestHandler<
   unknown,
   unknown,
@@ -42,21 +41,21 @@ export const getMemberBookingsPagination: RequestHandler<
   next();
 };
 
-
-export const getAllBookingHandler:GetMembersBookingHandler = async (req,res)=>{
+export const getAllBookingHandler: GetMembersBookingHandler = async (req, res) => {
   const booking = await MemberBooking.find(req.pagination.filter)
-    .skip(req.pagination.skip).limit(req.pagination.limit)
-    .populate([{path:'member'} , {path:'user' , select:'email username'}]);
+    .skip(req.pagination.skip)
+    .limit(req.pagination.limit)
+    .populate([{ path: 'member' }, { path: 'user', select: 'email username' }]);
 
   const resultCount = await MemberBooking.countDocuments(req.pagination.filter);
 
   res.status(200).json({
-    message:'success',
-    pagination:{
-      currentPage:req.pagination.page,
+    message: 'success',
+    pagination: {
+      currentPage: req.pagination.page,
       resultCount,
-      totalPages:Math.ceil(resultCount/req.pagination.limit)
+      totalPages: Math.ceil(resultCount / req.pagination.limit),
     },
-    data:booking
+    data: booking,
   });
 };

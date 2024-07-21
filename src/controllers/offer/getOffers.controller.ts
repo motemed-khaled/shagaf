@@ -5,16 +5,19 @@ import { RequestHandler } from 'express';
 import { Offer } from '../../models/offers.model';
 import { GetOffersHandler } from '../../types/endpoints/offer.endpoint';
 
-
-
-export const getOffersPagination: RequestHandler<unknown, unknown, unknown, {
-  title?: string;
-  name?: string;
-  discount?: number;
-  bookingNum?: number;
-  from?: Date;
-  to?: Date;
-}> = async (req, res, next) => {
+export const getOffersPagination: RequestHandler<
+  unknown,
+  unknown,
+  unknown,
+  {
+    title?: string;
+    name?: string;
+    discount?: number;
+    bookingNum?: number;
+    from?: Date;
+    to?: Date;
+  }
+> = async (req, res, next) => {
   req.pagination.filter = {};
 
   if (req.query.title) {
@@ -44,17 +47,20 @@ export const getOffersPagination: RequestHandler<unknown, unknown, unknown, {
   next();
 };
 
-export const getOffersHandler:GetOffersHandler = async (req , res)=>{
-  const offers = await Offer.find(req.pagination.filter).limit(req.pagination.limit).skip(req.pagination.skip).populate('users');
+export const getOffersHandler: GetOffersHandler = async (req, res) => {
+  const offers = await Offer.find(req.pagination.filter)
+    .limit(req.pagination.limit)
+    .skip(req.pagination.skip)
+    .populate('users');
 
   const resultCount = await Offer.find().countDocuments(req.pagination.filter);
   res.status(200).json({
-    message:'success',
-    pagination:{
-      currentPage:req.pagination.page,
+    message: 'success',
+    pagination: {
+      currentPage: req.pagination.page,
       resultCount,
-      totalPages:Math.ceil(resultCount/req.pagination.limit)
+      totalPages: Math.ceil(resultCount / req.pagination.limit),
     },
-    data:offers
+    data: offers,
   });
 };

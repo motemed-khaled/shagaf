@@ -1,4 +1,3 @@
-
 import cors from 'cors';
 import express from 'express';
 
@@ -16,7 +15,6 @@ app.use(
 app.set('trust proxy', true);
 app.use(express.json());
 app.use('/media', express.static('media'));
-
 
 mountRoutes(app);
 

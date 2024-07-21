@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:init": "ts-node seeds/index.ts",
+    "seed": "ts-node seed/development.seed.ts",
     "start:prod": "node build/index.js",
     "build": "tsc",
     "dev": "nodemon src/index.ts",

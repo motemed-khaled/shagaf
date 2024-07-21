@@ -1,10 +1,10 @@
 export interface IjwtPayload {
-    id: string;
-  }
-  
+  id: string;
+}
+
 export interface Ipagination {
-    limit: number;
-    skip: number;
-    page: number;
-    filter: any;
-  }
+  limit: number;
+  skip: number;
+  page: number;
+  filter: any;
+}
