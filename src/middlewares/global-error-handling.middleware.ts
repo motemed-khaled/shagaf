@@ -24,6 +24,11 @@ export const globalErrorHandlingMiddleware: ErrorRequestHandler = (err, req, res
   // JWT expired token
   if (err.name === 'TokenExpiredError')
     return res.status(401).json({ errors: [{ message: 'expired token' }] });
+
+  // invalid body
+  if (err instanceof SyntaxError && 'body' in err) 
+    return res.status(400).json({ errors: [{ message: 'Invalid JSON format. Please check your request body.' }] });
+
   // unHandled error
   res.status(500).json({ errors: [{ message: 'server error' }] });
 };
