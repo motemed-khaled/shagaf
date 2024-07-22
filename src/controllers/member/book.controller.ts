@@ -1,9 +1,10 @@
 import 'express-async-errors';
 
 import { MemberBooking } from '../../models/memberBooking.model';
-import { Member } from '../../models/members.model';
+import { Member, MemberDurationType } from '../../models/members.model';
 import { Users } from '../../models/user.model';
 import { BookMemberShipHandler } from '../../types/endpoints/member.endpoints';
+import { BadRequestError } from '../../utils/errors/bad-request-error';
 import { NotFoundError } from '../../utils/errors/notfound-error';
 
 export const bookMemberHandler: BookMemberShipHandler = async (req, res, next) => {
@@ -20,64 +21,42 @@ export const bookMemberHandler: BookMemberShipHandler = async (req, res, next) =
   if (req.body.pointDiscount) {
     if (user) {
       totalPrice = totalPrice - (user.point / 1000) * 10;
-      req.body.pointDiscount = (user!.point / 1000) * 10;
+      (req.body as any).pointDiscount = (user!.point / 1000) * 10;
     } else {
       user = await Users.findById(req.loggedUser?.id);
       totalPrice = totalPrice - (user!.point / 1000) * 10;
-      req.body.pointDiscount = (user!.point / 1000) * 10;
+      (req.body as any).pointDiscount = (user!.point / 1000) * 10;
     }
   }
 
-  req.body.end = calculateEndDate(req.body.start.toString(), member.duration, member.durationType);
+  const currentBook = await MemberBooking.findOne({user:user?._id});
+  if (currentBook) 
+    return next(new BadRequestError('user already have valid booking'));
+
+  if (member.durationType === MemberDurationType.day) {
+    const currentDate = new Date();
+    const newDate = new Date(currentDate);
+    newDate.setDate(currentDate.getDate() + member.duration);
+    req.body.end = newDate; 
+  }
+
+  if (member.durationType === MemberDurationType.month) {
+    const currentDate = new Date();
+    const newDate = new Date(currentDate);
+    newDate.setMonth(currentDate.getMonth() + 2);
+    req.body.end = newDate;
+  }
 
   const book = await MemberBooking.create({
     ...req.body,
     user: user ? req.body.user : req.loggedUser?.id,
     totalPrice,
+    start:  Date.now(),
+    end : req.body.end
   });
 
   res.status(201).json({ message: 'success', data: book });
 };
 
-const addDays = (date: Date, days: number): Date => {
-  const result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-};
 
-const addMonths = (date: Date, months: number): Date => {
-  const result = new Date(date);
-  result.setMonth(result.getMonth() + months);
-  return result;
-};
 
-const addYears = (date: Date, years: number): Date => {
-  const result = new Date(date);
-  result.setFullYear(result.getFullYear() + years);
-  return result;
-};
-type DurationType = 'Day' | 'Month' | 'Year';
-
-const calculateEndDate = (
-  startDate: string,
-  duration: number,
-  durationType: DurationType,
-): Date => {
-  let endDate = new Date(startDate);
-
-  switch (durationType) {
-    case 'Day':
-      endDate = addDays(endDate, duration);
-      break;
-    case 'Month':
-      endDate = addMonths(endDate, duration);
-      break;
-    case 'Year':
-      endDate = addYears(endDate, duration);
-      break;
-    default:
-      throw new Error('Invalid duration type');
-  }
-
-  return endDate;
-};

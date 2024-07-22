@@ -52,7 +52,7 @@ export interface BookMemberShipHandler
   extends RequestHandler<
     unknown,
     successResponse<{ data: ImemberBooking }>,
-    Pick<ImemberBooking, 'member' | 'start' | 'end' | 'user' | 'pointDiscount' | 'stuffDiscount'>,
+    Pick<ImemberBooking, 'member' | 'end' | 'user' | 'stuffDiscount'> & {pointDiscount:boolean},
     unknown
   > {}
 
@@ -60,7 +60,7 @@ export interface UpdateBookHandler
   extends RequestHandler<
     { bookId: string },
     successResponse<{ data: ImemberBooking }>,
-    { start: Date; voucher: string },
+    {  voucher: string },
     unknown
   > {}
 

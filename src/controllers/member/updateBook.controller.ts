@@ -19,8 +19,6 @@ export const updateBookHandler: UpdateBookHandler = async (req, res, next) => {
 
     book.totalPrice = book.totalPrice * (1 - voucher.discount / 100);
   }
-
-  book.start = req.body.start;
   await book.save();
   res.status(200).json({ message: 'success', data: book });
 };

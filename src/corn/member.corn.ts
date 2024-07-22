@@ -2,6 +2,7 @@
 import cron from 'node-cron';
 
 import { ImemberBooking, MemberBooking } from '../models/memberBooking.model';
+import { Users } from '../models/user.model';
 
 export const startCronJob = () => {
   cron.schedule(
@@ -15,6 +16,7 @@ export const startCronJob = () => {
 
         bookingsToDelete.forEach(async (booking: ImemberBooking) => {
           await MemberBooking.findByIdAndDelete(booking._id);
+          await Users.findByIdAndUpdate(booking.user , {'member.count':0});
           console.log(`Deleted booking with id ${booking._id}`);
         });
       } catch (error) {
