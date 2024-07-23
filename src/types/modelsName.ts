@@ -18,5 +18,5 @@ export enum MODELS {
   payment = 'payments',
   location = 'locations',
   package = 'packages',
-  setting = 'settings'
+  setting = 'settings',
 }

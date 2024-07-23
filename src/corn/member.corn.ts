@@ -16,7 +16,7 @@ export const startCronJob = () => {
 
         bookingsToDelete.forEach(async (booking: ImemberBooking) => {
           await MemberBooking.findByIdAndDelete(booking._id);
-          await Users.findByIdAndUpdate(booking.user , {'member.count':0});
+          await Users.findByIdAndUpdate(booking.user, { 'member.count': 0 });
           console.log(`Deleted booking with id ${booking._id}`);
         });
       } catch (error) {

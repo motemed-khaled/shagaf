@@ -2,15 +2,14 @@ import { model, Schema } from 'mongoose';
 
 import { MODELS } from '../types/modelsName';
 
-
 export enum MemberDurationType {
   day = 'Day',
-  month = 'Month'
+  month = 'Month',
 }
 
-export enum MemberType{
+export enum MemberType {
   separated = 'separated',
-  continuos = 'continuos'
+  continuos = 'continuos',
 }
 export interface Imember {
   title: string;
@@ -18,8 +17,8 @@ export interface Imember {
   price: number;
   duration: number;
   durationType: MemberDurationType;
-  type:MemberType;
-  end:Date
+  type: MemberType;
+  end: Date;
 }
 
 export const Member = model<Imember>(
@@ -31,8 +30,8 @@ export const Member = model<Imember>(
       price: { type: Number, default: null },
       duration: { type: Number, default: 0 },
       durationType: { type: String, enum: MemberDurationType },
-      type:{type:String , enum:MemberType},
-      end:Date
+      type: { type: String, enum: MemberType },
+      end: Date,
     },
     { timestamps: true, collection: MODELS.member },
   ),

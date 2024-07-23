@@ -45,14 +45,12 @@ export interface GetMemberHandler
 export interface GetMembersHandler
   extends RequestHandler<unknown, PaginationResponse<{ data: Imember[] }>, unknown, unknown> {}
 
-
-  
 // booking
 export interface BookMemberShipHandler
   extends RequestHandler<
     unknown,
     successResponse<{ data: ImemberBooking }>,
-    Pick<ImemberBooking, 'member' | 'end' | 'user' | 'stuffDiscount'> & {pointDiscount:boolean},
+    Pick<ImemberBooking, 'member' | 'end' | 'user' | 'stuffDiscount'> & { pointDiscount: boolean },
     unknown
   > {}
 
@@ -60,7 +58,7 @@ export interface UpdateBookHandler
   extends RequestHandler<
     { bookId: string },
     successResponse<{ data: ImemberBooking }>,
-    {  voucher: string },
+    { voucher: string },
     unknown
   > {}
 

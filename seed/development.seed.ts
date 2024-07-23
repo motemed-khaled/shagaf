@@ -4,12 +4,10 @@ import { dbConnection } from './../src/config/database_connection';
 import { Plan, PlanTypes } from './../src/models/plan.model';
 import { Setting } from './../src/models/settings.models';
 
-
-
 async function seedAdminAccount() {
   await dbConnection();
   try {
-    await Setting.create({sharedRoomPlan:false});
+    await Setting.create({ sharedRoomPlan: false });
     await Plan.create({
       type: PlanTypes.shared,
       title: 'Shared Plan',
@@ -28,7 +26,7 @@ async function seedAdminAccount() {
         price: 100,
       },
     });
-    console.log('seeder run successfully',);
+    console.log('seeder run successfully');
   } catch (error) {
     console.error('Error seeding admin account:', error);
   } finally {

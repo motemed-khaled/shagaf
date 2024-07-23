@@ -3,34 +3,30 @@ import { body, param, query } from 'express-validator';
 import { validationMiddleware } from '../middlewares/global-validator.middleware';
 import { MemberDurationType, MemberType } from '../models/members.model';
 
-
-
-
-
-
 export const createMemberVal = [
   body('title')
-    .exists().withMessage('Title is required')
-    .isString().withMessage('Title must be a string'),
+    .exists()
+    .withMessage('Title is required')
+    .isString()
+    .withMessage('Title must be a string'),
 
-  body('price')
-    .isFloat({ min: 1 }).withMessage('Price must be a positive number'),
+  body('price').isFloat({ min: 1 }).withMessage('Price must be a positive number'),
 
-  body('details')
-    .isArray({ min: 1 }).withMessage('Details must be a non-empty array'),
+  body('details').isArray({ min: 1 }).withMessage('Details must be a non-empty array'),
 
-  body('details.*')
-    .isObject().withMessage('Each detail must be an object'),
+  body('details.*').isObject().withMessage('Each detail must be an object'),
 
   body('details.*.title')
-    .exists().withMessage('Detail title is required')
-    .isString().withMessage('Detail title must be a string'),
+    .exists()
+    .withMessage('Detail title is required')
+    .isString()
+    .withMessage('Detail title must be a string'),
 
-  body('duration')
-    .isInt({ min: 1 }).withMessage('Duration is required and must be an integer'),
+  body('duration').isInt({ min: 1 }).withMessage('Duration is required and must be an integer'),
 
   body('durationType')
-    .isIn(Object.values(MemberDurationType)).withMessage('Invalid duration type')
+    .isIn(Object.values(MemberDurationType))
+    .withMessage('Invalid duration type')
     .custom((val, { req }) => {
       if (req.body.type === MemberType.separated && val === MemberDurationType.month) {
         throw new Error(`Duration type must be ${MemberDurationType.day}`);
@@ -39,7 +35,8 @@ export const createMemberVal = [
     }),
 
   body('type')
-    .isIn(Object.values(MemberType)).withMessage('Invalid type')
+    .isIn(Object.values(MemberType))
+    .withMessage('Invalid type')
     .custom((val, { req }) => {
       if (val === MemberType.separated && !req.body.end) {
         throw new Error('End date is required for the separated type');
@@ -52,12 +49,14 @@ export const createMemberVal = [
 
   body('end')
     .optional()
-    .isISO8601().toDate().withMessage('End date must be a valid ISO 8601 date')
+    .isISO8601()
+    .toDate()
+    .withMessage('End date must be a valid ISO 8601 date')
     .custom((val, { req }) => {
       if (req.body.type === MemberType.separated) {
         const currentDate = new Date();
         const datePlus15Days = new Date(currentDate);
-        datePlus15Days.setDate(currentDate.getDate() + (req.body.duration * 2));
+        datePlus15Days.setDate(currentDate.getDate() + req.body.duration * 2);
 
         if (val <= datePlus15Days) {
           throw new Error(`End date must be at least ${req.body.duration * 2} days in the future`);
@@ -69,37 +68,42 @@ export const createMemberVal = [
   validationMiddleware,
 ];
 
-
 export const updateMemberVal = [
   param('memberId').isMongoId().withMessage('Invalid memberId parameter'),
-  body('title').optional()
-    .exists().withMessage('Title is required')
-    .isString().withMessage('Title must be a string'),
+  body('title')
+    .optional()
+    .exists()
+    .withMessage('Title is required')
+    .isString()
+    .withMessage('Title must be a string'),
 
-  body('price').optional()
-    .isFloat({ min: 1 }).withMessage('Price must be a positive number'),
+  body('price').optional().isFloat({ min: 1 }).withMessage('Price must be a positive number'),
 
-  body('details').optional()
-    .isArray({ min: 1 }).withMessage('Details must be a non-empty array'),
+  body('details').optional().isArray({ min: 1 }).withMessage('Details must be a non-empty array'),
 
-  body('details.*')
-    .isObject().withMessage('Each detail must be an object'),
+  body('details.*').isObject().withMessage('Each detail must be an object'),
 
   body('details.*.title')
-    .exists().withMessage('Detail title is required')
-    .isString().withMessage('Detail title must be a string'),
+    .exists()
+    .withMessage('Detail title is required')
+    .isString()
+    .withMessage('Detail title must be a string'),
 
-  body('duration').optional()
-    .isInt({ min: 1 }).withMessage('Duration is required and must be an integer'),
+  body('duration')
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage('Duration is required and must be an integer'),
 
   body('end')
     .optional()
-    .isISO8601().toDate().withMessage('End date must be a valid ISO 8601 date')
+    .isISO8601()
+    .toDate()
+    .withMessage('End date must be a valid ISO 8601 date')
     .custom((val, { req }) => {
       if (req.body.type === MemberType.separated) {
         const currentDate = new Date();
         const datePlus15Days = new Date(currentDate);
-        datePlus15Days.setDate(currentDate.getDate() + (req.body.duration * 2));
+        datePlus15Days.setDate(currentDate.getDate() + req.body.duration * 2);
 
         if (val <= datePlus15Days) {
           throw new Error(`End date must be at least ${req.body.duration * 2} days in the future`);

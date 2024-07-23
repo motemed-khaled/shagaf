@@ -29,15 +29,14 @@ export const bookMemberHandler: BookMemberShipHandler = async (req, res, next) =
     }
   }
 
-  const currentBook = await MemberBooking.findOne({user:user?._id});
-  if (currentBook) 
-    return next(new BadRequestError('user already have valid booking'));
+  const currentBook = await MemberBooking.findOne({ user: user?._id });
+  if (currentBook) return next(new BadRequestError('user already have valid booking'));
 
   if (member.durationType === MemberDurationType.day) {
     const currentDate = new Date();
     const newDate = new Date(currentDate);
     newDate.setDate(currentDate.getDate() + member.duration);
-    req.body.end = newDate; 
+    req.body.end = newDate;
   }
 
   if (member.durationType === MemberDurationType.month) {
@@ -51,12 +50,9 @@ export const bookMemberHandler: BookMemberShipHandler = async (req, res, next) =
     ...req.body,
     user: user ? req.body.user : req.loggedUser?.id,
     totalPrice,
-    start:  Date.now(),
-    end : req.body.end
+    start: Date.now(),
+    end: req.body.end,
   });
 
   res.status(201).json({ message: 'success', data: book });
 };
-
-
-

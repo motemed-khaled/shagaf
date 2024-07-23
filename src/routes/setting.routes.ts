@@ -6,8 +6,6 @@ import * as val from '../validation/setting.val';
 
 export const router = express.Router();
 
-router.route('/')
-  .get(handlers.getSettingHandler);
+router.route('/').get(handlers.getSettingHandler);
 
-router.route('/:settingId')
-  .patch( isauthenticated , val.update, handlers.updateSettingHandler);
+router.route('/:settingId').patch(isauthenticated, val.update, handlers.updateSettingHandler);

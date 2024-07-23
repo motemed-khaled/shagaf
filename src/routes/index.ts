@@ -30,5 +30,4 @@ export const mountRoutes = async (app: Application) => {
   app.use('/api/packages', packageRouter);
   app.use('/api/plans', planRouter);
   app.use('/api/settings', settingRouter);
-
 };
