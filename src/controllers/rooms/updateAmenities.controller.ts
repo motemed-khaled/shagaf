@@ -24,7 +24,7 @@ export const updateAmenitiesHandler: RequestHandler<
   const image = <Express.Multer.File[] | undefined>(req.files as any).image;
 
   if (image && image.length) {
-    Files.removeFiles(room.amenities[index].image);
+    Files.removeFiles(room.amenities[index].image ? room.amenities[index].image:undefined );
     room.amenities[index].image = `/media/${FOLDERS.room}/${image[0].filename}`;
   }
 

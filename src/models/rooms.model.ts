@@ -67,7 +67,7 @@ export const Room = model<Iroom>(
           },
         },
       ],
-      birthDay: { type: Boolean, default: null },
+      birthDay: { type: Boolean, default: false },
     },
     { timestamps: true, collection: MODELS.room },
   ),

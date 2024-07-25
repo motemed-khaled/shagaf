@@ -12,9 +12,6 @@ export const getRoomHandler: RequestHandler<
   unknown
 > = async (req, res, next) => {
   const rooms = await Room.findById(req.params.roomId)
-    .sort({ createdAt: -1 })
-    .skip(req.pagination.skip)
-    .limit(req.pagination.limit)
     .populate([{ path: 'packages' }, { path: 'plans' }, { path: 'location' }]);
 
   if (!rooms) return next(new NotFoundError('room not found'));

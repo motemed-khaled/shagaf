@@ -28,7 +28,7 @@ export const createRoomHandler: RequestHandler<
   unknown
 > = async (req, res, next) => {
   const attachments = <Express.Multer.File[]>(req.files as any).attachments;
-  const cover = <Express.Multer.File[]>(req.files as any).attachments;
+  const cover = <Express.Multer.File[]>(req.files as any).cover;
 
   if (cover.length) req.body.cover = `/media/${FOLDERS.room}/${cover[0].filename}`;
   if (attachments.length)

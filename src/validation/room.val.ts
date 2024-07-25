@@ -2,7 +2,7 @@ import { body, param, query } from 'express-validator';
 
 import { validationMiddleware } from '../middlewares/global-validator.middleware';
 
-export const ceateRoom = [
+export const createRoom = [
   body('description').exists().isString().withMessage('Description must be a string'),
 
   body('location').isMongoId().withMessage('Location must be a valid Mongo ID'),
@@ -86,6 +86,6 @@ export const getAll = [
     .optional()
     .isInt({ min: 0 })
     .withMessage('Seats number max must be a non-negative integer'),
-  query('birthDay').optional().isBoolean().withMessage('BirthDay must be a boolean'),
+  query('birthDay').optional().isBoolean().toBoolean().withMessage('BirthDay must be a boolean'),
   validationMiddleware,
 ];

@@ -5,3 +5,4 @@ export * from './updateAmenities.controller';
 export * from './deleteRoom.controller';
 export * from './getRoom.controller';
 export * from './getRooms.controller';
+export * from './deleteAmenities.controller';

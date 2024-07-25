@@ -17,7 +17,7 @@ export const getRoomsPagination: RequestHandler<
     seatsAvailableMin?: number;
     seatsNumMax?: number;
     seatsNumMin?: number;
-    birthDay?:string
+    birthDay?:boolean
   }
 > = async (req, res, next) => {
   req.pagination.filter = {};
@@ -64,7 +64,7 @@ export const getRoomsPagination: RequestHandler<
   }
 
   if (req.query.birthDay !== undefined) {
-    req.pagination.filter.birthDay = req.query.birthDay === 'true';
+    req.pagination.filter.birthDay = req.query.birthDay;
   }
 
   next();
