@@ -146,15 +146,13 @@ export const getMembersVal = [
 export const memberBookVal = [
   body('member').isMongoId(),
   body('user').optional().isMongoId(),
-  body('start').isISO8601().toDate(),
-  body('stuffDiscount').optional().isBoolean().withMessage('stuffDiscount must by boolean'),
-  body('pointDiscount').optional().isInt({ min: 1 }).withMessage('pointDiscount must by integer'),
+  body('pointDiscount').optional().isBoolean().withMessage('pointDiscount must by boolean'),
   validationMiddleware,
 ];
 
+
 export const updateBookVal = [
   param('bookId').isMongoId(),
-  body('start').optional().isISO8601().toDate(),
   body('voucher').optional().isMongoId(),
   validationMiddleware,
 ];
