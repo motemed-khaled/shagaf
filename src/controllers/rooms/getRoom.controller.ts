@@ -11,8 +11,11 @@ export const getRoomHandler: RequestHandler<
   unknown,
   unknown
 > = async (req, res, next) => {
-  const rooms = await Room.findById(req.params.roomId)
-    .populate([{ path: 'packages' }, { path: 'plans' }, { path: 'location' }]);
+  const rooms = await Room.findById(req.params.roomId).populate([
+    { path: 'packages' },
+    { path: 'plans' },
+    { path: 'location' },
+  ]);
 
   if (!rooms) return next(new NotFoundError('room not found'));
 

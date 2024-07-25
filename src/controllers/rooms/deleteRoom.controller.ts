@@ -13,9 +13,9 @@ export const deleteRoomHandler: RequestHandler<
 > = async (req, res) => {
   const room = await Room.findByIdAndDelete(req.params.roomId);
   if (room) {
-    Files.removeFiles(...room.attachments , room.cover);
-    if (room.amenities && room.amenities.length) 
-      room.amenities.forEach(el => Files.removeFiles(el.image));
+    Files.removeFiles(...room.attachments, room.cover);
+    if (room.amenities && room.amenities.length)
+      room.amenities.forEach((el) => Files.removeFiles(el.image));
   }
   res.status(204).json({ message: 'success' });
 };

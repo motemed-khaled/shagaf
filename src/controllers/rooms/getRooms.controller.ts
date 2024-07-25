@@ -17,7 +17,7 @@ export const getRoomsPagination: RequestHandler<
     seatsAvailableMin?: number;
     seatsNumMax?: number;
     seatsNumMin?: number;
-    birthDay?:boolean
+    birthDay?: boolean;
   }
 > = async (req, res, next) => {
   req.pagination.filter = {};

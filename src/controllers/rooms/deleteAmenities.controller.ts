@@ -20,7 +20,7 @@ export const deleteAmenitiesHandler: RequestHandler<
 
   if (index === -1) return next(new NotFoundError('amenities not found'));
 
-  Files.removeFiles(room.amenities[index].image ? room.amenities[index].image : undefined );
+  Files.removeFiles(room.amenities[index].image ? room.amenities[index].image : undefined);
 
   room.amenities.splice(index, 1);
 
