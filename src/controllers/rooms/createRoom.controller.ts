@@ -24,6 +24,7 @@ export const createRoomHandler: RequestHandler<
     | 'seatsNum'
     | 'title'
     | 'birthDay'
+    | 'seatsAvailable'
   >,
   unknown
 > = async (req, res, next) => {
@@ -43,6 +44,7 @@ export const createRoomHandler: RequestHandler<
   const packages = await Package.countDocuments({ _id: req.body.packages.map((pa) => pa) });
   if (packages != req.body.packages.length) return next(new BadRequestError('invalid packages'));
 
+  req.body.seatsAvailable = req.body.seatsNum;
   const room = await Room.create(req.body);
 
   res.status(201).json({ message: 'success', data: room });

@@ -150,7 +150,6 @@ export const memberBookVal = [
   validationMiddleware,
 ];
 
-
 export const updateBookVal = [
   param('bookId').isMongoId(),
   body('voucher').optional().isMongoId(),
