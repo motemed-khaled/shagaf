@@ -12,6 +12,7 @@ import { router as packageRouter } from './package.routes';
 import { router as planRouter } from './plan.routes';
 import { router as productsRouter } from './products.routes';
 import { router as roomRouter } from './room.routes';
+import { router as roomBookRouter } from './roomBooking.routes';
 import { router as settingRouter } from './setting.routes';
 import { router as sliderRouter } from './slider.routes';
 import { router as userRouter } from './user.routes';
@@ -32,4 +33,5 @@ export const mountRoutes = async (app: Application) => {
   app.use('/api/plans', planRouter);
   app.use('/api/settings', settingRouter);
   app.use('/api/rooms', roomRouter);
+  app.use('/api/room-book', roomBookRouter);
 };

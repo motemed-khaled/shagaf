@@ -167,3 +167,9 @@ export const getAllBookingVal = [
   query('page').optional().isInt({ min: 1 }).withMessage('page must be integer'),
   validationMiddleware,
 ];
+
+
+export const updateUserVal = [
+  body('user').isMongoId(),
+  validationMiddleware
+];

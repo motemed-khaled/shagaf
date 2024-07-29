@@ -23,7 +23,7 @@ export interface IRoomBooking {
   room: Types.ObjectId | Iroom;
   plan: Types.ObjectId | IPlan | null;
   package: Types.ObjectId | IPackage | null;
-  products: [{ product: Types.ObjectId | Iproduct; free: boolean }];
+  products: [{ product: Types.ObjectId | Iproduct; free: boolean; count: number }];
   seatsCount: number;
   start: Date;
   end: Date;
@@ -44,11 +44,12 @@ export const RoomBooking = model<IRoomBooking>(
       user: { type: Schema.Types.ObjectId, ref: MODELS.user },
       room: { type: Schema.Types.ObjectId, ref: MODELS.room },
       plan: { type: Schema.Types.ObjectId, ref: MODELS.plan },
-      package: { Type: Schema.Types.ObjectId, ref: MODELS.package },
+      package: { type: Schema.Types.ObjectId, ref: MODELS.package },
       products: [
         {
           product: { type: Schema.Types.ObjectId, ref: MODELS.product },
           free: { type: Boolean, default: false },
+          count: { type: Number, default: 1 },
         },
       ],
       start: Date,

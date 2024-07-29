@@ -28,7 +28,7 @@ export interface Iusers {
   isVerified: boolean;
   userType: 'manager' | 'stuff' | 'user';
   point: number;
-  member: { count: number; endAt: Date; type: 'day' | 'month' };
+  member: { count: number; endAt: Date | null; type: 'day' | 'month' };
 }
 
 const userSchema = new Schema<Iusers>(
