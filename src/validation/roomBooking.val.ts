@@ -45,7 +45,7 @@
 //   validationMiddleware
 // ];
 
-import { body, oneOf, ValidationChain } from 'express-validator';
+import { body, oneOf, param, ValidationChain } from 'express-validator';
 
 import { validationMiddleware } from '../middlewares/global-validator.middleware';
 import { ReservationType } from '../models/roomBooking.model';
@@ -83,4 +83,17 @@ export const validateRoomBooking = [
     { message: 'Invalid reservation type or missing required fields for the specified type' },
   ),
   validationMiddleware,
+];
+
+export const getOne = [
+  param('bookId').isMongoId(),
+  validationMiddleware
+];
+
+export const addProductVal = [
+  param('bookId').isMongoId(),
+  body('products').isArray({min:1}),
+  body('products.*.product').isMongoId(),
+  body('products.*.count').isInt({min:1}),
+  validationMiddleware
 ];

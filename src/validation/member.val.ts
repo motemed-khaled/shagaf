@@ -168,8 +168,4 @@ export const getAllBookingVal = [
   validationMiddleware,
 ];
 
-
-export const updateUserVal = [
-  body('user').isMongoId(),
-  validationMiddleware
-];
+export const updateUserVal = [body('user').isMongoId(), validationMiddleware];

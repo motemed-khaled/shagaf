@@ -7,8 +7,7 @@ import * as val from '../validation/member.val';
 
 export const router = express.Router();
 
-
-router.route('/user').post( isauthenticated ,  val.updateUserVal , handler.UpdateUserHandler);
+router.route('/user').post(isauthenticated, val.updateUserVal, handler.UpdateUserHandler);
 
 router
   .route('/')

@@ -13,18 +13,15 @@ export const UpdateUserHandler: RequestHandler<
   unknown
 > = async (req, res, next) => {
   const user = await Users.findById(req.body.user);
-  if (!user) 
-    return next(new NotFoundError('user not found'));
+  if (!user) return next(new NotFoundError('user not found'));
 
-  const member = await MemberBooking.findOne({user:req.body.user , end:{$gt:new Date()}});
-  if (!member) 
-    return next(new NotFoundError('user dont member'));
+  const member = await MemberBooking.findOne({ user: req.body.user, end: { $gt: new Date() } });
+  if (!member) return next(new NotFoundError('user dont member'));
 
-  if (user.member.count > 0 && user.member.endAt! > new Date()) 
+  if (user.member.count > 0 && user.member.endAt! > new Date())
     user.member.count = user.member.count - 1;
-  else{
+  else {
     user.member.count = 0;
     user.member.endAt = null;
   }
-  
 };
