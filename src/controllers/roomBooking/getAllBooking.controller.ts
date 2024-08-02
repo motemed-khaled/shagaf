@@ -1,9 +1,13 @@
 import { RequestHandler } from 'express';
 
 import 'express-async-errors';
-import { IRoomBooking, ReservationPaidType, ReservationType, RoomBooking } from '../../models/roomBooking.model';
+import {
+  IRoomBooking,
+  ReservationPaidType,
+  ReservationType,
+  RoomBooking,
+} from '../../models/roomBooking.model';
 import { PaginationResponse } from '../../types/response';
-
 
 export const getRoomBookingsPagination: RequestHandler<
   unknown,
@@ -68,7 +72,7 @@ export const getRoomBookingsPagination: RequestHandler<
   }
 
   if (req.query.productPaid !== undefined) {
-    req.pagination.filter.productPaid = req.query.productPaid ;
+    req.pagination.filter.productPaid = req.query.productPaid;
   }
 
   if (req.query.extraPaid !== undefined) {
@@ -76,7 +80,7 @@ export const getRoomBookingsPagination: RequestHandler<
   }
 
   if (req.query.closed !== undefined) {
-    req.pagination.filter.closed = req.query.closed ;
+    req.pagination.filter.closed = req.query.closed;
   }
 
   if (req.query.seatsCountFrom || req.query.seatsCountTo) {
@@ -121,8 +125,6 @@ export const getRoomBookingsPagination: RequestHandler<
 
   next();
 };
-
-
 
 export const getAllBookingHandler: RequestHandler<
   unknown,

@@ -11,7 +11,7 @@ router.route('/user').get(isauthenticated, globalPaginationMiddleware, handlers.
 router
   .route('/')
   .post(isauthenticated, val.validateRoomBooking, handlers.createNewBookHandler)
-  .get(isauthenticated  , val.getAll, globalPaginationMiddleware, handlers.getAllBookingHandler);
+  .get(isauthenticated, val.getAll, globalPaginationMiddleware, handlers.getAllBookingHandler);
 
 router
   .route('/:bookId')

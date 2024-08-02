@@ -21,8 +21,7 @@ export const updateEventHandler: UpdateEventHandler = async (req, res, next) => 
 
   if (req.body.location) {
     const location = await Location.findById(req.body.location);
-    if (!location) 
-      return next(new NotFoundError('location not found'));
+    if (!location) return next(new NotFoundError('location not found'));
   }
 
   const updatedEvent = await Event.findByIdAndUpdate(req.params.eventId, req.body, { new: true });

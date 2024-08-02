@@ -55,35 +55,64 @@ export const deleteProductVal = [
 ];
 
 export const getAll = [
-  query('limit').optional().isInt({min:1}),
-  query('page').optional().isInt({min:1}),
+  query('limit').optional().isInt({ min: 1 }),
+  query('page').optional().isInt({ min: 1 }),
   query('userId').optional().isMongoId().withMessage('Invalid user ID format'),
   query('roomId').optional().isMongoId().withMessage('Invalid room ID format'),
   query('planId').optional().isMongoId().withMessage('Invalid plan ID format'),
   query('packageId').optional().isMongoId().withMessage('Invalid package ID format'),
 
-  
   query('startDate').optional().isISO8601().withMessage('Invalid start date format'),
   query('endDate').optional().isISO8601().withMessage('Invalid end date format'),
-  
-  query('reservationType').optional().isIn(Object.values(ReservationType)).withMessage('Invalid reservation type'),
-  query('reservationPaidType').optional().isIn(Object.values(ReservationPaidType)).withMessage('Invalid reservation paid type'),
-  
+
+  query('reservationType')
+    .optional()
+    .isIn(Object.values(ReservationType))
+    .withMessage('Invalid reservation type'),
+  query('reservationPaidType')
+    .optional()
+    .isIn(Object.values(ReservationPaidType))
+    .withMessage('Invalid reservation paid type'),
+
   query('productPaid').optional().isBoolean().withMessage('Product paid should be a boolean'),
   query('extraPaid').optional().isBoolean().withMessage('Extra paid should be a boolean'),
-  
+
   query('closed').optional().isBoolean().withMessage('Closed should be a boolean'),
-  
-  query('seatsCountFrom').optional().isInt({ min: 0 }).withMessage('Seats count from should be a non-negative integer'),
-  query('seatsCountTo').optional().isInt({ min: 0 }).withMessage('Seats count to should be a non-negative integer'),
-  
-  query('reservationPriceFrom').optional().isFloat({ min: 0 }).withMessage('Reservation price from should be a non-negative number'),
-  query('reservationPriceTo').optional().isFloat({ min: 0 }).withMessage('Reservation price to should be a non-negative number'),
-  
-  query('productPriceFrom').optional().isFloat({ min: 0 }).withMessage('Product price from should be a non-negative number'),
-  query('productPriceTo').optional().isFloat({ min: 0 }).withMessage('Product price to should be a non-negative number'),
-  
-  query('extraPriceFrom').optional().isFloat({ min: 0 }).withMessage('Extra price from should be a non-negative number'),
-  query('extraPriceTo').optional().isFloat({ min: 0 }).withMessage('Extra price to should be a non-negative number'),
-  validationMiddleware
+
+  query('seatsCountFrom')
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage('Seats count from should be a non-negative integer'),
+  query('seatsCountTo')
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage('Seats count to should be a non-negative integer'),
+
+  query('reservationPriceFrom')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('Reservation price from should be a non-negative number'),
+  query('reservationPriceTo')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('Reservation price to should be a non-negative number'),
+
+  query('productPriceFrom')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('Product price from should be a non-negative number'),
+  query('productPriceTo')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('Product price to should be a non-negative number'),
+
+  query('extraPriceFrom')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('Extra price from should be a non-negative number'),
+  query('extraPriceTo')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('Extra price to should be a non-negative number'),
+  validationMiddleware,
 ];

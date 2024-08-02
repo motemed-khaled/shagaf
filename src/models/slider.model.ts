@@ -15,7 +15,7 @@ export const Slider = model<ISlider>(
   new Schema<ISlider>(
     {
       location: {
-        type: Schema.Types.ObjectId ,
+        type: Schema.Types.ObjectId,
         ref: MODELS.location,
       },
       title: {

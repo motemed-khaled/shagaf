@@ -46,11 +46,10 @@ export const roomCronJob = () => {
           end: { $lt: now },
         });
 
-        for (const book of bookings){
+        for (const book of bookings) {
           await Room.findByIdAndUpdate(book.room, { $inc: { seatsAvailable: book.seatsCount } });
-          await RoomBooking.findByIdAndUpdate(book._id , {closed:true});
+          await RoomBooking.findByIdAndUpdate(book._id, { closed: true });
         }
-
       } catch (error) {
         console.error('Error deleting bookings:', error);
       }
