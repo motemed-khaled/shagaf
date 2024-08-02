@@ -14,8 +14,13 @@ export const getUserBookHandler: RequestHandler<
     .sort({ createdAt: -1 })
     .skip(req.pagination.skip)
     .limit(req.pagination.limit)
-    .populate([{path:'package'} , {path:'plan'} , {path:'room'} , {path:'user'} , {path:'products.product'}]);
-
+    .populate([
+      { path: 'package' },
+      { path: 'plan' },
+      { path: 'room' },
+      { path: 'user' },
+      { path: 'products.product' },
+    ]);
 
   const resultCount = await RoomBooking.countDocuments({
     ...req.pagination.filter,

@@ -3,3 +3,4 @@ export * from './addProduct.controller';
 export * from './getAllBooking.controller';
 export * from './getBook.controller';
 export * from './getUserBook.controller';
+export * from './deleteProduct.controller';

@@ -35,6 +35,7 @@ export interface IRoomBooking {
   productPaid: boolean;
   extraPaid: boolean;
   reservationType: ReservationType;
+  closed:boolean
 }
 
 export const RoomBooking = model<IRoomBooking>(
@@ -64,6 +65,7 @@ export const RoomBooking = model<IRoomBooking>(
       productPaid: { type: Boolean, default: false },
       extraPaid: { type: Boolean, default: false },
       seatsCount: { type: Number, default: 0 },
+      closed:{type:Boolean , default:false}
     },
     { timestamps: true, collection: MODELS.roomBooking },
   ),

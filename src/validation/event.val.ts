@@ -10,7 +10,7 @@ export const createEventVal = [
     .isString()
     .exists()
     .withMessage('Detail title is required and must be a string'),
-  body('location').isString().exists().withMessage('Location must string'),
+  body('location').isMongoId().withMessage('Location must mongo id'),
   body('title').isString().exists().withMessage('Title is required and must be a string'),
   body('date')
     .isISO8601()
@@ -28,7 +28,7 @@ export const createEventVal = [
 export const updateEventVal = [
   param('eventId').isMongoId().withMessage('Invalid eventId parameter'),
   body('cost').optional().isInt({ min: 1 }).withMessage('Cost must be a positive integer'),
-  body('location').optional().isString().exists().withMessage('Location must string'),
+  body('location').optional().isMongoId().withMessage('Location must mongo id'),
   body('title').optional().isString().exists().withMessage('Title must be a string'),
   body('date')
     .optional()
@@ -56,7 +56,7 @@ export const deleteEventVal = [
 
 export const getEventsVal = [
   query('title').optional().isString().withMessage('Title must be a string').trim().escape(),
-  query('location').optional().isString().exists().withMessage('Location must string'),
+  query('location').optional().isMongoId().withMessage('Location must mongo id'),
   query('cost').optional().isNumeric().withMessage('Cost must be a number'),
   query('details').optional().isString().withMessage('Details must be a string').trim().escape(),
   query('startDate')

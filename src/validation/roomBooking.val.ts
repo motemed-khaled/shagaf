@@ -1,54 +1,7 @@
-// import { body } from 'express-validator';
-
-// import { validationMiddleware } from '../middlewares/global-validator.middleware';
-// import { ReservationType } from '../models/roomBooking.model';
-
-// export const create = [
-//   body('start').isISO8601().bail().custom((val) => {
-//     const date = new Date(val);
-//     const now = new Date();
-//     if (date > now) return true;
-//     throw new Error('start date must be in the future');
-//   }),
-//   body('end').isISO8601().bail().custom((val, { req }) => {
-//     const date = new Date(val);
-//     const start = new Date(req.body.start);
-//     if (date > start) return true;
-//     throw new Error('end date must be Greater than start date');
-//   }),
-//   body('user').optional().isMongoId(),
-//   body('room').isMongoId(),
-//   body('reservationType').isIn(Object.values(ReservationType)).custom((val)=>{
-//     if (val === ReservationType.shared) {
-//       return [
-//         body('plan').isMongoId(),
-//         body('package').isMongoId(),
-//         body('seatsCount').isInt({min:1})
-//       ];
-//     }
-
-//     if (val === ReservationType.private) {
-//       return [
-//         body('plan').isMongoId()
-//       ];
-//     }
-
-//     if (val === ReservationType.birthDay) {
-//       return [
-//         body('plan').isMongoId(),
-//         body('seatsCount').isInt({min:1})
-//       ];
-//     }
-
-//     throw new Error('invalid reservation plan');
-//   }),
-//   validationMiddleware
-// ];
-
-import { body, oneOf, param, ValidationChain } from 'express-validator';
+import { body, oneOf, param, query, ValidationChain } from 'express-validator';
 
 import { validationMiddleware } from '../middlewares/global-validator.middleware';
-import { ReservationType } from '../models/roomBooking.model';
+import { ReservationPaidType, ReservationType } from '../models/roomBooking.model';
 
 // Common validation rules
 const commonValidations: ValidationChain[] = [
@@ -85,15 +38,52 @@ export const validateRoomBooking = [
   validationMiddleware,
 ];
 
-export const getOne = [
-  param('bookId').isMongoId(),
-  validationMiddleware
-];
+export const getOne = [param('bookId').isMongoId(), validationMiddleware];
 
 export const addProductVal = [
   param('bookId').isMongoId(),
-  body('products').isArray({min:1}),
+  body('products').isArray({ min: 1 }),
   body('products.*.product').isMongoId(),
-  body('products.*.count').isInt({min:1}),
+  body('products.*.count').isInt({ min: 1 }),
+  validationMiddleware,
+];
+
+export const deleteProductVal = [
+  param('bookId').isMongoId(),
+  body('itemId').isMongoId(),
+  validationMiddleware,
+];
+
+export const getAll = [
+  query('limit').optional().isInt({min:1}),
+  query('page').optional().isInt({min:1}),
+  query('userId').optional().isMongoId().withMessage('Invalid user ID format'),
+  query('roomId').optional().isMongoId().withMessage('Invalid room ID format'),
+  query('planId').optional().isMongoId().withMessage('Invalid plan ID format'),
+  query('packageId').optional().isMongoId().withMessage('Invalid package ID format'),
+
+  
+  query('startDate').optional().isISO8601().withMessage('Invalid start date format'),
+  query('endDate').optional().isISO8601().withMessage('Invalid end date format'),
+  
+  query('reservationType').optional().isIn(Object.values(ReservationType)).withMessage('Invalid reservation type'),
+  query('reservationPaidType').optional().isIn(Object.values(ReservationPaidType)).withMessage('Invalid reservation paid type'),
+  
+  query('productPaid').optional().isBoolean().withMessage('Product paid should be a boolean'),
+  query('extraPaid').optional().isBoolean().withMessage('Extra paid should be a boolean'),
+  
+  query('closed').optional().isBoolean().withMessage('Closed should be a boolean'),
+  
+  query('seatsCountFrom').optional().isInt({ min: 0 }).withMessage('Seats count from should be a non-negative integer'),
+  query('seatsCountTo').optional().isInt({ min: 0 }).withMessage('Seats count to should be a non-negative integer'),
+  
+  query('reservationPriceFrom').optional().isFloat({ min: 0 }).withMessage('Reservation price from should be a non-negative number'),
+  query('reservationPriceTo').optional().isFloat({ min: 0 }).withMessage('Reservation price to should be a non-negative number'),
+  
+  query('productPriceFrom').optional().isFloat({ min: 0 }).withMessage('Product price from should be a non-negative number'),
+  query('productPriceTo').optional().isFloat({ min: 0 }).withMessage('Product price to should be a non-negative number'),
+  
+  query('extraPriceFrom').optional().isFloat({ min: 0 }).withMessage('Extra price from should be a non-negative number'),
+  query('extraPriceTo').optional().isFloat({ min: 0 }).withMessage('Extra price to should be a non-negative number'),
   validationMiddleware
 ];

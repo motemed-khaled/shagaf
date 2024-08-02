@@ -1,6 +1,7 @@
 import 'express-async-errors';
 
 import { RequestHandler } from 'express';
+import mongoose from 'mongoose';
 
 import { Event } from '../../models/event.model';
 import { GetEventsHandler } from '../../types/endpoints/event.endpoints';
@@ -25,9 +26,7 @@ export const getEventsPagination: RequestHandler<
   }
 
   if (req.query.location) {
-    req.pagination.filter.location = {
-      $in: Array.isArray(req.query.location) ? req.query.location : [req.query.location],
-    };
+    req.pagination.filter.location = new mongoose.Types.ObjectId(req.query.location);
   }
 
   if (req.query.cost) {
@@ -54,7 +53,8 @@ export const getEventsPagination: RequestHandler<
 export const getEventsHandler: GetEventsHandler = async (req, res) => {
   const events = await Event.find(req.pagination.filter)
     .limit(req.pagination.limit)
-    .skip(req.pagination.skip);
+    .skip(req.pagination.skip)
+    .populate('location');
 
   const resultCount = await Event.find(req.pagination.filter).countDocuments();
 

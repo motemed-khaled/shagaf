@@ -1,5 +1,6 @@
 import 'express-async-errors';
 
+import { Location } from '../../models/location.model';
 import { Slider } from '../../models/slider.model';
 import { UpdateSliderHandler } from '../../types/endpoints/slider.endpoints';
 import { FOLDERS } from '../../types/folders';
@@ -17,6 +18,13 @@ export const updateSliderHandler: UpdateSliderHandler = async (req, res, next) =
     req.body.cover = `/media/${FOLDERS.slider}/${cover[0].filename}`;
     Files.removeFiles(slider.cover);
   } else delete req.body.cover;
+
+  if (req.body.location) {
+    const location = await Location.findById(req.body.location);
+    if (!location) 
+      return next(new NotFoundError('location not found'));
+  
+  }
 
   const updatedSlider = await Slider.findByIdAndUpdate(req.params.sliderId, req.body, {
     new: true,

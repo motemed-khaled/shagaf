@@ -3,7 +3,7 @@ import { body, param } from 'express-validator';
 import { validationMiddleware } from '../middlewares/global-validator.middleware';
 
 export const createSliderVal = [
-  body('location').isString().exists().withMessage('Location must string'),
+  body('location').isMongoId().withMessage('Location must mongo id'),
   body('rate').isInt({ min: 0, max: 5 }).withMessage('Rate must be an integer between 0 and 5'),
   body('title').isString().exists().withMessage('Title is required and must be a string'),
   validationMiddleware,
@@ -11,7 +11,7 @@ export const createSliderVal = [
 
 export const updateSliderVal = [
   param('sliderId').isMongoId().withMessage('Invalid slider ID'),
-  body('location').optional().isString().exists().withMessage('Location must string'),
+  body('location').optional().isMongoId().withMessage('Location must mongo id'),
   body('rate')
     .optional()
     .isInt({ min: 0, max: 5 })

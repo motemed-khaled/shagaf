@@ -11,9 +11,13 @@ export const getBookHandler: RequestHandler<
   unknown,
   unknown
 > = async (req, res, next) => {
-  const book = await RoomBooking.findById(req.params.bookId)
-    .populate([{path:'package'} , {path:'plan'} , {path:'room'} , {path:'user'} , {path:'products.product'}]);
-
+  const book = await RoomBooking.findById(req.params.bookId).populate([
+    { path: 'package' },
+    { path: 'plan' },
+    { path: 'room' },
+    { path: 'user' },
+    { path: 'products.product' },
+  ]);
 
   if (!book) return next(new NotFoundError('book not found'));
 

@@ -1,9 +1,10 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, Types } from 'mongoose';
 
+import { Ilocation } from './location.model';
 import { MODELS } from '../types/modelsName';
 
 export interface ISlider {
-  location: string;
+  location: Types.ObjectId | Ilocation;
   title: string;
   rate: number;
   cover: string;
@@ -14,8 +15,8 @@ export const Slider = model<ISlider>(
   new Schema<ISlider>(
     {
       location: {
-        type: String,
-        default: null,
+        type: Schema.Types.ObjectId ,
+        ref: MODELS.location,
       },
       title: {
         type: String,
