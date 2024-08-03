@@ -7,7 +7,7 @@ import * as val from '../validation/roomBooking.val';
 
 export const router = express.Router();
 
-router.route('/user').get(isauthenticated, globalPaginationMiddleware, handlers.getUserBookHandler);
+router.route('/user').get(isauthenticated , val.getAll, globalPaginationMiddleware , handlers.getRoomBookingsPagination, handlers.getUserBookHandler);
 router
   .route('/')
   .post(isauthenticated, val.validateRoomBooking, handlers.createNewBookHandler)
