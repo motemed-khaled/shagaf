@@ -18,6 +18,11 @@ export enum ReservationType {
   birthDay = 'birthDay',
 }
 
+export enum BookType {
+  application = 'application',
+  onsite = 'onsite'
+}
+
 export interface IRoomBooking {
   user: Types.ObjectId | Iusers;
   room: Types.ObjectId | Iroom;
@@ -36,6 +41,7 @@ export interface IRoomBooking {
   extraPaid: boolean;
   reservationType: ReservationType;
   closed: boolean;
+  type: BookType
 }
 
 export const RoomBooking = model<IRoomBooking>(
@@ -66,6 +72,8 @@ export const RoomBooking = model<IRoomBooking>(
       extraPaid: { type: Boolean, default: false },
       seatsCount: { type: Number, default: 0 },
       closed: { type: Boolean, default: false },
+      type:{type:String , enum:BookType , default: BookType.application}
+      
     },
     { timestamps: true, collection: MODELS.roomBooking },
   ),
