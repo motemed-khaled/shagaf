@@ -33,6 +33,7 @@ export const getRoomBookingsPagination: RequestHandler<
     productPriceTo?: number;
     extraPriceFrom?: number;
     extraPriceTo?: number;
+    type?:string
   }
 > = async (req, res, next) => {
   req.pagination.filter = {};
@@ -122,6 +123,10 @@ export const getRoomBookingsPagination: RequestHandler<
       req.pagination.filter.extraPrice.$lte = Number(req.query.extraPriceTo);
     }
   }
+
+  if (req.query.type) 
+    req.pagination.filter.type = req.query.type;
+  
 
   next();
 };

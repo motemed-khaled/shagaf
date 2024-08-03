@@ -1,7 +1,7 @@
 import { body, oneOf, param, query, ValidationChain } from 'express-validator';
 
 import { validationMiddleware } from '../middlewares/global-validator.middleware';
-import { ReservationPaidType, ReservationType } from '../models/roomBooking.model';
+import { BookType, ReservationPaidType, ReservationType } from '../models/roomBooking.model';
 
 // Common validation rules
 const commonValidations: ValidationChain[] = [
@@ -114,5 +114,7 @@ export const getAll = [
     .optional()
     .isFloat({ min: 0 })
     .withMessage('Extra price to should be a non-negative number'),
+
+  query('type').optional().isIn(Object.values(BookType)),
   validationMiddleware,
 ];
