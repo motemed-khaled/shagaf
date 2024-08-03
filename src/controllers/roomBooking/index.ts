@@ -4,3 +4,6 @@ export * from './getAllBooking.controller';
 export * from './getBook.controller';
 export * from './getUserBook.controller';
 export * from './deleteProduct.controller';
+export * from './updateBook.controller';
+export * from './openNewBook.controllers';
+export * from './closeBook.controller';

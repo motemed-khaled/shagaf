@@ -33,6 +33,8 @@ export const bookEventHandler: BookEventHandler = async (req, res, next) => {
       totalPrice = totalPrice - (user!.point / 1000) * 10;
       req.body.pointDiscount = (user!.point / 1000) * 10;
     }
+    user!.point = user!.point - req.body.pointDiscount;
+    await user?.save();
   }
 
   const book = await EventBook.create({

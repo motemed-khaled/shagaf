@@ -37,4 +37,4 @@ router
     handlers.updatePlanHandler,
   )
   .get(val.getPlan, handlers.getPlanHandler)
-  .delete(isauthenticated , val.getPlan , handlers.deletePlanHandler);
+  .delete(isauthenticated, val.getPlan, handlers.deletePlanHandler);

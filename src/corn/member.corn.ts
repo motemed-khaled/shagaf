@@ -44,6 +44,7 @@ export const roomCronJob = () => {
         const bookings = await RoomBooking.find({
           start: { $gte: twoDaysAgo },
           end: { $lt: now },
+          closed: false
         });
 
         for (const book of bookings) {

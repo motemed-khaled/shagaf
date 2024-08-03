@@ -17,7 +17,7 @@ export const createNewBookHandler: RequestHandler<
   Partial<
     Pick<
       IRoomBooking,
-      'start' | 'end' | 'plan' | 'package' | 'room' | 'user' | 'reservationType' | 'seatsCount'
+      'start' | 'end' | 'plan' | 'package' | 'room' | 'user' | 'reservationType' | 'seatsCount' | 'pointDiscount' | 'stuffDiscount'
     >
   >,
   unknown
@@ -34,13 +34,7 @@ export const createNewBookHandler: RequestHandler<
   const room = await Room.findById(req.body.room);
   if (!room) return next(new NotFoundError('room not found'));
 
-  let user = req.loggedUser?.id;
-
-  if (req.body.user) {
-    const existUser = await Users.findById(req.body.user);
-    if (!existUser) return next(new NotFoundError('user not found'));
-    user = existUser._id.toString();
-  }
+  const user = req.loggedUser?.id;
 
   // if shared reservation
   if (req.body.reservationType === ReservationType.shared) {
@@ -81,29 +75,48 @@ export const createNewBookHandler: RequestHandler<
 
       let reservationPrice = 0;
 
-      // Enhanced reservation price calculation
       const sharedRates = [
         { maxHours: 1, rate: plan.shared.hourOne },
         { maxHours: 2, rate: plan.shared.hourTwo },
         { maxHours: 3, rate: plan.shared.hourThree },
         { maxHours: 4, rate: plan.shared.hourFour },
       ];
-
+      
+      let accumulatedPrice = 0;
+      
       for (const { maxHours, rate } of sharedRates) {
+        accumulatedPrice += rate;
         if (differenceInHours <= maxHours) {
-          reservationPrice = rate;
+          reservationPrice = accumulatedPrice;
           break;
         }
       }
 
       if (room.seatsAvailable < req.body.seatsCount!)
         return next(new BadRequestError('no seats avaliable in this room right now'));
+      reservationPrice = reservationPrice * req.body.seatsCount! ;
+      if (req.body.stuffDiscount) 
+        reservationPrice = reservationPrice - req.body.stuffDiscount;
+
+      if (req.body.pointDiscount) {
+        const user = await Users.findById(req.loggedUser?.id);
+        
+        if (!user)
+          return next(new NotFoundError('user not found')); 
+        reservationPrice = reservationPrice - (user.point / 1000) * 10;
+        req.body.pointDiscount = (user.point / 1000) * 10;
+        user.point = user.point - req.body.pointDiscount;
+        await user.save();
+      }
+      
 
       const book = await RoomBooking.create({
         ...req.body,
-        reservationPrice: reservationPrice * req.body.seatsCount!,
+        reservationPrice: reservationPrice ,
         user,
+        totalHours:differenceInHours
       });
+
 
       room.seatsAvailable = room.seatsAvailable - req.body.seatsCount!;
       await room.save();
@@ -116,7 +129,8 @@ export const createNewBookHandler: RequestHandler<
       if (!existPackage) return next(new NotFoundError('package not found'));
 
       let reservationPrice = 0;
-      const ifExtra = !!(differenceInHours - existPackage.duration);
+      const difference = differenceInHours - existPackage.duration;
+      const ifExtra = difference >= 0;
       if (!ifExtra) reservationPrice = existPackage.price;
       else {
         const extraTime = differenceInHours - existPackage.duration;
@@ -127,10 +141,26 @@ export const createNewBookHandler: RequestHandler<
       if (room.seatsAvailable < req.body.seatsCount!)
         return next(new BadRequestError('no seats avaliable in this room right now'));
 
+      reservationPrice = reservationPrice * req.body.seatsCount! ;
+      if (req.body.stuffDiscount) 
+        reservationPrice = reservationPrice - req.body.stuffDiscount;
+
+      if (req.body.pointDiscount) {
+        const user = await Users.findById(req.loggedUser?.id);
+        
+        if (!user)
+          return next(new NotFoundError('user not found')); 
+        reservationPrice = reservationPrice - (user.point / 1000) * 10;
+        req.body.pointDiscount = (user.point / 1000) * 10;
+        user.point = user.point - req.body.pointDiscount;
+        await user.save();
+      }
+
       const book = await RoomBooking.create({
         ...req.body,
-        reservationPrice: reservationPrice * req.body.seatsCount!,
+        reservationPrice: reservationPrice,
         user,
+        totalHours:differenceInHours
       });
 
       room.seatsAvailable = room.seatsAvailable - req.body.seatsCount!;
@@ -161,13 +191,28 @@ export const createNewBookHandler: RequestHandler<
         ),
       );
 
-    const reservationPrice = differenceInHours * plan.private.price;
+    let reservationPrice = differenceInHours * plan.private.price;
+
+    if (req.body.stuffDiscount) 
+      reservationPrice = reservationPrice - req.body.stuffDiscount;
+
+    if (req.body.pointDiscount) {
+      const user = await Users.findById(req.loggedUser?.id);
+      
+      if (!user)
+        return next(new NotFoundError('user not found')); 
+      reservationPrice = reservationPrice - (user.point / 1000) * 10;
+      req.body.pointDiscount = (user.point / 1000) * 10;
+      user.point = user.point - req.body.pointDiscount;
+      await user.save();
+    }
 
     const book = await RoomBooking.create({
       ...req.body,
       reservationPrice,
       user,
       seatsCount: 0,
+      totalHours:differenceInHours
     });
 
     return res.status(201).json({ message: 'success', data: book });
@@ -198,12 +243,29 @@ export const createNewBookHandler: RequestHandler<
     if (room.seatsAvailable < req.body.seatsCount!)
       return next(new BadRequestError('no seats avaliable in this room right now'));
 
-    const reservationPrice = differenceInHours * plan.birthDay.price;
+    let reservationPrice = differenceInHours * plan.birthDay.price;
+
+
+    reservationPrice = reservationPrice * req.body.seatsCount! ;
+    if (req.body.stuffDiscount) 
+      reservationPrice = reservationPrice - req.body.stuffDiscount;
+
+    if (req.body.pointDiscount) {
+      const user = await Users.findById(req.loggedUser?.id);
+      
+      if (!user)
+        return next(new NotFoundError('user not found')); 
+      reservationPrice = reservationPrice - (user.point / 1000) * 10;
+      req.body.pointDiscount = (user.point / 1000) * 10;
+      user.point = user.point - req.body.pointDiscount;
+      await user.save();
+    }
 
     const book = await RoomBooking.create({
       ...req.body,
-      reservationPrice: reservationPrice * req.body.seatsCount!,
+      reservationPrice: reservationPrice,
       user,
+      totalHours:differenceInHours
     });
 
     room.seatsAvailable = room.seatsAvailable - req.body.seatsCount!;

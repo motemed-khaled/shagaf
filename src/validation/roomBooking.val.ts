@@ -5,16 +5,29 @@ import { BookType, ReservationPaidType, ReservationType } from '../models/roomBo
 
 // Common validation rules
 const commonValidations: ValidationChain[] = [
-  body('start').isISO8601().toDate(),
-  body('end').isISO8601().toDate(),
+  body('start').isISO8601().toDate().custom((val) => {
+    const date = new Date(val);
+    const now = new Date();
+    if (date > now) return true;
+    throw new Error('start date must be in the future');
+  }),
+  body('end').isISO8601().toDate().custom((val, { req }) => {
+    const date = new Date(val);
+    const start = new Date(req.body.start);
+    if (date > start) return true;
+    throw new Error('end date must be Greater than start date');
+  }),
   body('room').isMongoId(),
   body('user').optional().isMongoId(),
+  body('pointDiscount').optional().isBoolean().withMessage('stuffDiscount must by boolean'),
+  body('stuffDiscount').optional().isInt({ min: 1 }).withMessage('pointDiscount must by integer'),
 ];
 
 const sharedValidations: ValidationChain[] = [
   body('plan').optional().isMongoId(),
   body('package').optional().isMongoId(),
   body('seatsCount').isInt({ min: 1 }),
+
 ];
 
 const privateValidations: ValidationChain[] = [body('plan').isMongoId()];
@@ -117,4 +130,24 @@ export const getAll = [
 
   query('type').optional().isIn(Object.values(BookType)),
   validationMiddleware,
+];
+
+export const openBookVal = [
+  body('user').isMongoId(),
+  body('package').isMongoId(),
+  body('room').isMongoId(),
+  body('seatsCount').isInt({min:1}),
+  validationMiddleware
+];  
+
+export const updateBookVal = [
+  param('bookId').isMongoId(),
+  body('reservationPaid').optional().isBoolean().toBoolean(),
+  body('productPaid').optional().isBoolean().toBoolean(),
+  validationMiddleware
+];
+
+export const closeBookVal = [
+  param('bookId').isMongoId(),
+  validationMiddleware
 ];

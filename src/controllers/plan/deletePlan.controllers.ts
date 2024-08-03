@@ -11,10 +11,9 @@ export const deletePlanHandler: RequestHandler<
   unknown,
   unknown
 > = async (req, res, next) => {
-  const plan = await Plan.findOneAndDelete({_id:req.params.planId , type : PlanTypes.birthDay});
+  const plan = await Plan.findOneAndDelete({ _id: req.params.planId, type: PlanTypes.birthDay });
 
-  if (!plan)
-    return next(new NotFoundError('plan not found'));
+  if (!plan) return next(new NotFoundError('plan not found'));
 
-  res.status(204).json({message:'success'});
+  res.status(204).json({ message: 'success' });
 };
